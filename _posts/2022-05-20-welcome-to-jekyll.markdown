@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Testing"
+title:  "Default Page"
 date:   2022-05-20 22:21:02 +0100
 categories: jekyll update
 ---
