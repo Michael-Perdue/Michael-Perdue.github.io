@@ -8,17 +8,15 @@ main:
   # - title: "Sitemap"
   #   url: /sitemap/
 home:
-  - title: "Projects"
+  - title: "Welcome To Jekyll"
+    url: /posts/welcome-to-jekyll/
+  - title: "Network applications"
     children:
-      - title: "Welcome To Jekyll"
-        url: /posts/welcome-to-jekyll/
-      - title: "Network applications"
-        children:
-          - title: "Ping"
-            url: /posts/network-applications
-          - title: "Traceroute"
-            url: /posts/network-applications
-          - title: "Web server"
-            url: /posts/network-applications
-          - title: "Proxy server"
-            url: /posts/network-applications
+      - title: "Ping"
+        url: /posts/network-applications
+      - title: "Traceroute"
+        url: /posts/network-applications
+      - title: "Web server"
+        url: /posts/network-applications
+      - title: "Proxy server"
+        url: /posts/network-applications
