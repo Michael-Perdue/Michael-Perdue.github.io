@@ -28,10 +28,10 @@ url: "" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  Michael-Perdue
 permalink: /posts/:title
 # Build settings
-theme: minimal-mistakes-jekyll
+remote_theme: "mmistakes/minimal-mistakes@4.24.0"
 #theme_color: dark
 plugins:
-  - jekyll-feed
+  - jekyll-remote-theme
   - jekyll-include-cache
 
 # Exclude from processing.
