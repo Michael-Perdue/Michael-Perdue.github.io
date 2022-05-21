@@ -11,8 +11,6 @@ main:
 home:
   - title: "Projects"
     children:
-    - title: "Welcome To Jekyll"
-      url: /posts/welcome-to-jekyll/
     - title: "Network applications
       children:
       - title: "Ping"
