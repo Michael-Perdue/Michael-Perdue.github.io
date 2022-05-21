@@ -1,4 +1,9 @@
 ---
+author:
+  name     : "Michael Perdue"
+  avatar   : "/assets/ProfilePic.jfif"
+  bio      : "Just looking to have fun"
+  location : "Northampton, UK"
 sidebar:
   title: "Navigation"
   nav: home
