@@ -3,6 +3,6 @@ layout: posts
 ---
 Using python sockets I created a raw implementation of Ping, the implementation that I made resembles the [Linux ping command](https://man7.org/linux/man-pages/man8/ping.8.html). My implementation doesnt offer as much options as the linux implementation does but it does allow the user to set the timeout (with `-t<time>`) and the amount of times that they want to ping an address (with `-c<amount>`). The user can either enter in the Ip address or the host name either one will work and to end the ping when a count is not set you have to press `CTRL + C`. Upon ending the program the user will see the minimum, average and maximum delay of all pings that were sent.
 
-Here is an example of a ping to google and is done using the command python3 NetworkApplications.py `ping google.com`
+Here is an example of a ping to google and is done using the command `python3 NetworkApplications.py ping google.com`
 
 ![](https://michael-perdue.github.io/assets/GooglePing.PNG)
