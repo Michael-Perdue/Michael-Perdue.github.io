@@ -10,4 +10,6 @@ main:
 
 home:
   -title: "Projects"
-   url: /
+  children:
+    -title: "Welcome To Jekyll"
+    url: /posts/welcome-to-jekyll/
