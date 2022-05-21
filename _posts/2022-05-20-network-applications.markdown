@@ -16,5 +16,5 @@ Here is an example of a ping to google and is done using the command `python3 Ne
 
 The second functionality that the program can offer is traceroute, once again the implemenation that I made resembles the [Unix traceroute command](https://man7.org/linux/man-pages/man8/traceroute.8.html). My implementation doesnt offer all of the unix options but it does let the user choose between using ICMP packets and using UDP packets (with `-p<protocol>` by default it uses ICMP) and set a timeout until packets are counted as lost (with `-t<time>`). It tries to send 3 packets to each hop and record the RTT of each packet, it will also note whether any packets are lost (if a packet is lost a * will be printed rather then the RTT) and what IPs the packets are sent to if they are sent to different IPs then each IP will be printed on a seperate line. Upon the finding of the destination or the max TTL is reached then the total packets sent is printed along with the amount of packets lost. You can also exit the program at any time with `CTRL + Z`. You can give an IP address or a hostname.
 
-Here is an example of a traceroute to 
-
+Here is an example of a udp traceroute to googles DNS and is done using the command `python3 NetworkApplications.py traceroute 8.8.8.8 -t1 -tpudp`
+![](https://michael-perdue.github.io/assets/GoogleTraceroute.PNG)
