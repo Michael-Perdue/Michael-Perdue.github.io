@@ -1,4 +1,6 @@
 ---
+sidebar:
+  nav: "main"
 defaults:
   # _posts
   - scope:
