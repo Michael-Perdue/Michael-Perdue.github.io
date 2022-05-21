@@ -9,15 +9,13 @@ main:
   #   url: /sitemap/
 
 home:
-  - title: "Projects"
+  - title: "Network applications
     children:
-      - title: "Network applications
-        children:
-          - title: "Ping"
-            url: /posts/network-applications
-          - title: "Traceroute"
-            url: /posts/network-applications
-          - title: "Web server"
-            url: /posts/network-applications
-          - title: "Proxy server"
-            url: /posts/network-applications
+      - title: "Ping"
+        url: /posts/network-applications
+      - title: "Traceroute"
+        url: /posts/network-applications
+      - title: "Web server"
+        url: /posts/network-applications
+      - title: "Proxy server"
+        url: /posts/network-applications
