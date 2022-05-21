@@ -17,7 +17,7 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-
+breadcrumbs: true
 title: Michael Perdue's Projects
 email: Michael0Perdue@example.com
 description: >- # this means to ignore newlines until "baseurl:"
