@@ -1,6 +1,7 @@
 ---
 sidebar:
-  nav: "home"
+  title: "test"
+  nav: home
 defaults:
   # _posts
   - scope:
