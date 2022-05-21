@@ -13,3 +13,14 @@ home:
     children:
     - title: "Welcome To Jekyll"
       url: /posts/welcome-to-jekyll/
+    - title: "Network applications
+      url: /posts/network-applications
+      children:
+        - title: "Ping"
+          url: /posts/network-applications
+        - title: "Traceroute"
+          url: /posts/network-applications
+        - title: "Web server"
+          url: /posts/network-applications
+        - title: "Proxy server"
+          url: /posts/network-applications
