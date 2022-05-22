@@ -20,6 +20,7 @@ Here is an example of it in action:
 ![](https://michael-perdue.github.io/assets/WordWindow.PNG)
 
 **Overall percentage plagiarised window**
+
 This tab is split into two sides with different functionailty. The left side of the tab lets the users enter a minimum number of words needed for a phrase to be considered a phrase. Then it displays the top 10 highest percentages of plagiarised files based on the amount of common phrases. The right side of the tab lets the users enter a minimum number of words needed for a phrase to be considered a phrase and a filename to check all the files against and to. Then it displays every file compared to the entered file in descending order, then a one line gap and then it displays the selected file compared to every file. 
 
 Here is an example of it in action:
