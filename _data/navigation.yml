@@ -21,3 +21,8 @@ home:
         url: /posts/network-applications
       - title: "Proxy server"
         url: /posts/network-applications
+  - title: "Memory applications"
+    url: /posts/memory-applications
+    children:
+      - title: "My own Malloc and Free"
+      - url: /posts/memory-applications
