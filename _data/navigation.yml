@@ -26,3 +26,12 @@ home:
     children:
       - title: "My own Malloc and Free"
         url: /posts/memory-application
+  - title: "Plagiarsim Checker"
+    url: /posts/plagiarsim-checker
+    children:
+      - title: Highlighting plagiarised text
+        url: /posts/plagiarsim-checker
+      - title: Word frequencey
+        url: /posts/plagiarsim-checker
+      - title: Overall percentage plagiarised
+        url: /posts/plagiarsim-checker
