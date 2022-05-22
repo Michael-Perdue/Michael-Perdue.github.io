@@ -12,4 +12,4 @@ I created a header file to allow for the program to be used by other programs. I
 
 This program can be run throught the commands `gcc *.c *.h -o main` and `./main` - here is an series of frees and allocations:
 
-![]()
+![](https://michael-perdue.github.io/assets/MallocInAction.PNG)
