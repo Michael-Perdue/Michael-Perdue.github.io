@@ -8,8 +8,6 @@ main:
   # - title: "Sitemap"
   #   url: /sitemap/
 home:
-  - title: "Welcome To Jekyll"
-    url: /posts/welcome-to-jekyll/
   - title: "Network applications"
     url: /posts/network-applications
     children:
