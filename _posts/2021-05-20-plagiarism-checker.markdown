@@ -12,7 +12,7 @@ This tab lets the user enter two text file names (must enter full name i.e. test
 
 Here is an example of it in action: 
 
-![](https://michael-perdue.github.io/assets/TextWindow.PNG)
+![](https://michael-perdue.github.io/assets/TextWindow.png)
 
 **Word frequencey window**
 
@@ -20,7 +20,7 @@ This tab is split into two sides with different functionality. The left side of 
 
 Here is an example of it in action:
 
-![](https://michael-perdue.github.io/assets/WordWindow.PNG)
+![](https://michael-perdue.github.io/assets/WordWindow.png)
 
 **Overall percentage plagiarised window**
 
@@ -28,4 +28,4 @@ This tab is split into two sides with different functionailty. The left side of 
 
 Here is an example of it in action:
 
-![](https://michael-perdue.github.io/assets/PercentageWindow.PNG)
+![](https://michael-perdue.github.io/assets/PercentageWindow.png)
