@@ -5,7 +5,7 @@ categories: [University Projects, 2nd year]
 tags: [java]     # TAG names should always be lowercase
 ---
 
-**Creating my own malloc and free**
+## Creating my own malloc and free
 
 I created my own implementation of memory allocation in C to replace the already existing [malloc and free](https://man7.org/linux/man-pages/man3/malloc.3.html). It contains multiple doubly linked free lists of memory blocks of varying sizes starting at the smallest being 64 and under and the biggest being 4k and over. It is fully functional at allocating and freeing memory but it currently does not coalesce freed memory leading to possibly lots of fragmentation depending on its use. It uses [sbrk](https://linux.die.net/man/2/sbrk) to get more memory to be used for allocation and each request sbrk request is 8k. An important thing to note with the implementation is that it cannot deal with memory requests of larger then 8k and this is due to the existing malloc using [mmap](https://man7.org/linux/man-pages/man2/mmap.2.html) to deal with requests larger then 8k so I decided not to implement it for my program.
 

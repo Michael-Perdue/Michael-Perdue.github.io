@@ -5,4 +5,4 @@ categories: [University Projects, 2nd year]
 tags: [java]     # TAG names should always be lowercase
 ---
 
-**Solving the maze for the quickest path**
+## Solving the maze for the quickest path
