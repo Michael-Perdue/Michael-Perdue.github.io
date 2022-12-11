@@ -2,7 +2,7 @@
 title: Memory Application
 date: 2021-11-21
 categories: [University Projects, 2nd year]
-tags: [java]     # TAG names should always be lowercase
+tags: [c]     # TAG names should always be lowercase
 ---
 
 ## Creating my own malloc and free
