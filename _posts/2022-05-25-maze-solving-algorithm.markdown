@@ -6,3 +6,6 @@ tags: [java]     # TAG names should always be lowercase
 ---
 
 ## Solving the maze for the quickest path
+
+
+![](https://michael-perdue.github.io/assets/maze.gif)
