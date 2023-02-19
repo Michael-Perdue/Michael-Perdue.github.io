@@ -4,6 +4,7 @@ order: 4
 ---
 
 Education
+
 Software Engineering MSci Hons 2020 – Present Lancaster University
 
 Third year of studying Software Engineering MSci Hons at Lancaster University working at a projected 1st.
