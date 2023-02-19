@@ -24,5 +24,5 @@ For these two third year projects I have used C++ to code the Micro:bits, google
 
 ### A-levels, 2018 – 2020 Caroline Chisholm School
 
-Cambridge Technical Introductory Diploma in IT (Distinction*), Computing (A*), Maths (A)
+Cambridge Technical Introductory Diploma in IT (Distinction\*), Computing (A\*), Maths (A)
 
