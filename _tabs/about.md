@@ -3,8 +3,8 @@ icon: fas fa-info-circle
 order: 4
 ---
 
-## Education
-### Software Engineering MSci Hons 2020 – Present Lancaster University
+Education
+Software Engineering MSci Hons 2020 – Present Lancaster University
 
 Third year of studying Software Engineering MSci Hons at Lancaster University working at a projected 1st.
 
@@ -20,5 +20,5 @@ The second system I worked on is an extension of the first and works through the
 
 For these two third year projects I have used C++ to code the Micro:bits, google protocol buffers to create and pass messages, in Java processed data serially, in an event driven way, created unit tests, used Twitter and Facebook APIs to schedule regular posts and managed a MySQL database. In python wrote a rest API using flask and wrote to a MySQL database using SQL statements and an influx database which was achieved through flux statements. Finally for testing purposes used Grafana to view the live data in the influx database.
 
-### A-levels, 2018 – 2020 Caroline Chisholm School
+A-levels, 2018 – 2020 Caroline Chisholm School
 Computing (A*), Maths (A), Cambridge Technical Introductory Diploma in IT (Distinction*)
