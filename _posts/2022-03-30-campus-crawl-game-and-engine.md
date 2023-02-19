@@ -40,6 +40,7 @@ Enemy movement in the game is based upon an implementation of A* pathing algorit
 
 Here you can see the pathing where the red squares are collision tiles and the green npcs are enemies: 
 
+![](https://michael-perdue.github.io/assets/PathingCampusCrawl.gif)
 
 ### Combat system
 
