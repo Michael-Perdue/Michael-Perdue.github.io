@@ -68,4 +68,4 @@ The ingame UI:
 
 This is a short demo of the finished game:
 
-<video width="500px" height="500px" src="https://michael-perdue.github.io/assets/gameDemo.mp4"></video>
+<iframe title="Campus Crawl Demo" width="480" height="390" src="https://www.youtube.com/watch?v=29R-4SPj_A8?autoplay=1" frameborder="0" allowfullscreen></iframe>
