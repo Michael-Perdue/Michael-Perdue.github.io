@@ -68,4 +68,4 @@ The ingame UI:
 
 This is a short demo of the finished game:
 
-![](https://michael-perdue.github.io/assets/gameDemo.mp4)
+<video src='https://michael-perdue.github.io/assets/gameDemo.mp4' width=180/>
