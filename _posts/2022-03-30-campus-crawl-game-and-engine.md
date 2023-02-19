@@ -65,3 +65,7 @@ The ingame UI:
 
 
 ### Short demo of the game as whole
+
+This is a short demo of the finished game:
+
+![](https://michael-perdue.github.io/assets/gameDemo.mp4)
