@@ -11,11 +11,14 @@ The game which I made was based off a tile engine that was made by someone I was
 
 The UI of tile engine:
 
+![](https://michael-perdue.github.io/assets/editor.png)
+
 ### Editor
 The engine’s editor is built upon a modified version of the open source DarkUI using WinForms and allows the user to build and create dynamic tiled maps, manage events and mark tiles for collision for these maps without the need for manual programming.
 
 example of making an event: 
 
+![](https://michael-perdue.github.io/assets/editorevent.png)
 
 Once projects have been built using the editor, the assets, code, and additional metadata is compiled down into a compressed, easy to use format by the tileEngine compiler, which can then be provided to end users. The tileEngins compiler manages the conversion of all the assets into “.XNB” format and it also performs packing of all project metadata such as the project’s virtual file tree and default settings into packed binary form.
 
