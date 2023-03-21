@@ -5,33 +5,33 @@ categories: [University Projects, 3rd year]
 tags: [java, c++, python, flask, grafana, influx, sql, microbits]  # TAG names should always be lowercase
 ---
 
-#The structure of the backend of the system
+# The structure of the backend of the system
 
-##Microbits
+## Microbits
 
-##Base Station
+## Base Station
 
-##API
+## API
 
-##Database
+## Database
 
-#The systems features
+# The systems features
 
-##Demo of overall system
+## Demo of overall system
 
-##Realtime environmental data
+## Realtime environmental data
 
-##Light actuation
+## Light actuation
 
-##Door unlocking and locking
+## Door unlocking and locking
 
-##Graphs of live and historic data
+## Graphs of live and historic data
 
-##Fully managable system from the front end
+## Fully managable system from the front end
 
-###System structure management
+### System structure management
 
-###User management
+### User management
 
-###Microbit management
+### Microbit management
 
