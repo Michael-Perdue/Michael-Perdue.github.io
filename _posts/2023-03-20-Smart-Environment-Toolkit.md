@@ -17,11 +17,17 @@ After the first project the [Smart Lab](https://michael-perdue.github.io/posts/S
 
 This brings me onto the logical structure of the system which can be seen in this diagram below:
 
+![](https://michael-perdue.github.io/assets/SET-structure.png)
+
 This structure allows for the smart environment to work for any environment as the end user can define what a zone is, how many zones they have and how many areas each zone has. This system also supports as many walkers, doors and sensor microbits the only requirement for rooms is that there is atleast one basecamp in any room you have a sensor for. However if you don't need to have a sensor in the room then a room can exist without any basecamps thus a room can exist without any microbits. This is all then managable from the front end so you can delete,add and change rooms, areas and zones. In addition you can also assign,unassign and change the role (so sensor to door to walker etc) of all microbits.
 
 
 ## Microbits
-So our setup is similar to last time however due to a better knowledge of the microbit radio we no longer had to use atomic multicast like we did on the previous project which in turn decreased the amount of processing and lost packets of the microbits. The walker microbit is used for opening doors and as basically a location/room current capacity tracker and it itself does not need to communicate with the basecamp.
+The code for the microbits is written in C++ and is written using the ![codal library](https://github.com/lancaster-university/codal-microbit-v2) and this works by first writing the code in C++ then compiling that code to hex through codal and then flashing that hex onto the microbits 
+
+So our setup is similar to last time however due to a better knowledge of the microbit radio we no longer had to use atomic multicast like we did on the previous project which in turn decreased the amount of processing and lost packets of the microbits. The walker microbit is used for opening doors and as basically a location/room current capacity tracker and it itself does not need to communicate with the basecamp. When the walker wants to open the door the door will contact the base camp and the base camp will write over serial to the base station the packet and the base sation will turn it into API request which will return the results of if it can open the door and that packet will be sent do the door. The walker then also send a message to the nearest sensor saying that it is still alive every 10 seconds so that the sensor can then forward on the information and keep live tracking of its location. In addition the sensor will also send the temperature, noise and light reading every 3 seconds. 
+
+The microbits when turned on use a simple dhcp which is that they will send a request to the basecamp for its ID and role, this is then written over serial and a request to the API is made which looks up a MySQL table that has all the serial ids of microbits along with a user friendly ID (starts at 1 and increments after each new microbit) and the role, this is then returned over serial and a packet is sent. The microbit will then flash If the microbit has no role then it will send a keep alive request every 30 seconds and when that request comes in it will check if a new role has been given. You then know what microbit is giving what data as they send along a little bit of meta data saying the size of the packet, the packet id, the microbit id then the data. 
 
 ## Base Station
 
