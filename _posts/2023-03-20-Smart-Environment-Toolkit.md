@@ -39,6 +39,16 @@ The microbits when turned on use a simple dhcp which is that they will send a re
 
 ## Demo of overall system
 
+Here is a video of the website working from a phone:
+
+[![Mobile Demo](https://img.youtube.com/vi/edvk2hz0MMY/0.jpg)](https://www.youtube.com/watch?v=edvk2hz0MMY&t "Mobile Demo")
+
+Here is how the system looks from the hardware sides of things:
+
+![](https://michael-perdue.github.io/assets/AllToolkit.gif)
+
+In the demo above you can see the system in practive where each of the clusters are a room and its microbits asocciated with that room (note in practice and it has been tested in much bigger environments but for the sake of recording that is not possible to show). The computer then which has a base camp microbit attached to it and then this bace camp continually flashes B to let you know it has just processed some messages. Then on the actual computer proccessing the messages you can see it has a console window which is prints the amount of messages proccessed a second, the microbits that are connecting and disconnecting to this basecamp and any errors. Finally the computer shows a video of the homepage dashboard of the website with live data.
+
 ## Realtime environmental data
 
 ## Light actuation
