@@ -23,13 +23,20 @@ This structure allows for the smart environment to work for any environment as t
 
 
 ## Microbits
-The code for the microbits is written in C++ and is written using the ![codal library](https://github.com/lancaster-university/codal-microbit-v2) and this works by first writing the code in C++ then compiling that code to hex through codal and then flashing that hex onto the microbits 
+The code for the microbits is written in C++ and is written using the [codal library](https://github.com/lancaster-university/codal-microbit-v2) and this works by first writing the code in C++ then compiling that code to hex through codal and then flashing that hex onto the microbits 
 
 So our setup is similar to last time however due to a better knowledge of the microbit radio we no longer had to use atomic multicast like we did on the previous project which in turn decreased the amount of processing and lost packets of the microbits. The walker microbit is used for opening doors and as basically a location/room current capacity tracker and it itself does not need to communicate with the basecamp. When the walker wants to open the door the door will contact the base camp and the base camp will write over serial to the base station the packet and the base sation will turn it into API request which will return the results of if it can open the door and that packet will be sent do the door. The walker then also send a message to the nearest sensor saying that it is still alive every 10 seconds so that the sensor can then forward on the information and keep live tracking of its location. In addition the sensor will also send the temperature, noise and light reading every 3 seconds. 
 
 The microbits when turned on use a simple dhcp which is that they will send a request to the basecamp for its ID and role, this is then written over serial and a request to the API is made which looks up a MySQL table that has all the serial ids of microbits along with a user friendly ID (starts at 1 and increments after each new microbit) and the role, this is then returned over serial and a packet is sent. The microbit will then flash If the microbit has no role then it will send a keep alive request every 30 seconds and when that request comes in it will check if a new role has been given. You then know what microbit is giving what data as they send along a little bit of meta data saying the size of the packet, the message id, the packet id, the microbit id then the data. The message id would then be used for making sure messages are only proccessed once by as they are a randomly generated 32 uint number.
 
 ## Base Station
+The Base Station is effectively responsible for the turning bytes sent from a microbit serially into the correct data and then calling the relevant API routes to ensure that the data is handled correctly and stored if needed. The code itself is written in java and is event driven following the [observer design pattern](https://refactoring.guru/design-patterns/observer) which is shown in the class diagram below where the serial manager class will read packets and report them to the packet manager and then this packet manager will loop through all listners and report to them if they are subscribed to that packet type that one has appeared, the listeners on creation need to register themselves as a listener by calling the method in the packet manger class. 
+
+
+
+Below is a class diagram of the base station, note doted line means it iteracts/uses that classes methods or properties, the blue line dictates classs inheritance, the green line is when a class is implementing a intergace and a white solid line is when a class must contain a specific amount of instances of another class:
+
+![](https://michael-perdue.github.io/assets/ToolKitClass.png)
 
 ## API
 
