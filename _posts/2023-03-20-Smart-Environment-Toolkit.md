@@ -7,6 +7,13 @@ tags: [java, c++, python, flask, grafana, influx, sql, microbits]  # TAG names s
 
 Note this project was completed in a group of 3 people with a rotating scrum master between each 3 of us and my role was everything except front end (I made the graphing page for the front end but that was just embedding grafana through an iFrame) and I didn't really work on the microbits embedded side of things this time unlike the [previous project (Smart Lab)](https://michael-perdue.github.io/posts/Smart-Lab/) that I did work on the microbits extensively and this projects extends that previous project. So I was focused on the Base Station, API, InfluxDB, MySQL DB and grafana for this project.
 
+# TLDR of the project
+
+This project is an extension of the [Smart Lab](https://michael-perdue.github.io/posts/Smart-Lab/) project I made and takes the idea of a smart lab IOT with microbits and brings it to a whole environment spanning multiple buildings and rooms all configurable by the user (ie amount of buildings, areas, rooms etc). It provides a website that can be accessed anywhere that provides real time statics of the building (amount of people in each building and room, the temperature, noise level and light level) and also management of the rooms light remotely (turn on and off from anywhere with internet). This is done through microbits being coded to record this information and communicates as a mesh network with one microbit per room writing over serial to a computer which processes it in java and sends it to a api written in python on a vps where it is then stored in an influx db and the website then calls the api to get the information. Then the capacity of the people is done through users carrying microbits which communicate with the sensors every 10 seconds saying that they are there and these users can also unlock doors through their microbits. You can easily design the system to work for any real world scenario as the creation of buildings/rooms/floors etc and the mapping of microbits can be all done through the website. Each microbit can be configured to work as any role from the website so you can set a microbit to be a sensor then remove it and set it to be a light. The deletion of a building will then remove any roles of the microbits in that building to allow for easy setting up of the system again and again.
+
+The system is thoughrouly tested through unit tests, user testing, end to end testing, integration testing and testing of the system to ensure it can run 24/7. Sadly microbits are quite limiting especially for a system like this so they don't always perform perfectly so during our test their would ocasionaly be lost data for a minute or so along with some other minor bugs however that is due to the limitation of microbits hardware and the [codal library](https://github.com/lancaster-university/codal-microbit-v2) they run on which we had to edit a decent amount to allow for this system to work. Below you can read an indepth dive of the system including class diagrams, screenshots, clips of the IOT system running, code snippets and more. 
+
+
 # The structure of the backend of the system
 
 Here is a diagram of our backend structure:
@@ -21,7 +28,6 @@ This brings me onto the logical structure of the system which can be seen in thi
 
 This structure allows for the smart environment to work for any environment as the end user can define what a zone is, how many zones they have and how many areas each zone has. This system also supports as many walkers, doors and sensor microbits the only requirement for rooms is that there is atleast one basecamp in any room you have a sensor for. However if you don't need to have a sensor in the room then a room can exist without any basecamps thus a room can exist without any microbits. This is all then managable from the front end so you can delete,add and change rooms, areas and zones. In addition you can also assign,unassign and change the role (so sensor to door to walker etc) of all microbits.
 
-
 ## Microbits
 The code for the microbits is written in C++ and is written using the [codal library](https://github.com/lancaster-university/codal-microbit-v2) and this works by first writing the code in C++ then compiling that code to hex through codal and then flashing that hex onto the microbits 
 
@@ -34,14 +40,102 @@ The Base Station is effectively responsible for the turning bytes sent from a mi
 
 Then the listeners all have a set way they deal with each event/packet they are registered to listen to, so for data related packets report listener will call the rest api manager with the packet type and the packet which the api manager will subsequently compile a correct url to call on the api to store that data. The door listener is used for packets to check if a microbit can open a door or not through the api manager and it will then construct a packet to send back over through the serial manager stating whether the door can be opened or not. The address listener is for assigning the microbits ids whenever they turn on so it will send a request through the api asking whether the serial id (uint32) of the microbit has an assigned easy to read id(starts at 1) and the api will return one and if one didnt exist it will make a new one by the incrementing the current highest id number. The light actuation listener does the same as the door listener but just gets back its status. Then the listeners that need to send a packet will do so via sending the packet to the serial manager and this will then write it over serial.
 
+The base station also performs additional checks to ensure no garbage/corrupted data is processed and this is done by checking the size of the packets ensuring that not only it is big enough to process but once it is being processed by the serial manager it checks that for its packet type it is the correct size and if its not then 4 bytes are cleared from the buffer and the next 4 bytes are read from buffer until a non corrupted packet is found. This is done on top of the microbits checking for duplicate packets based of ID's so in total the system deals with corruption of data and duplication of data.
 
+When it comes to testing of the base station along side integration testing and end to end testing I have made multiple unit tests using Junit and it tests parsing of each packet type, alongside the creation of the url routes for the api. In addition the base stations has a debug mode in which toggling a boolean flag allows you to easily see all information about the packets being proccesed, routes being used and any other imporant diagnositc information.
 
-
-Below is a class diagram of the base station, note doted line means it iteracts/uses that classes methods or properties, the blue line dictates classs inheritance, the green line is when a class is implementing a intergace and a white solid line is when a class must contain a specific amount of instances of another class:
+Rather then including code snippets of the java code I have instead made a class diagram as unlike with the API you won't be able to make sense of any of the code just from snippets. Below is a class diagram of the base station, note doted line means it iteracts/uses that classes methods or properties, the blue line dictates classs inheritance, the green line is when a class is implementing a intergace and a white solid line is when a class must contain a specific amount of instances of another class:
 
 ![](https://michael-perdue.github.io/assets/ToolKitClass.png)
 
 ## API
+The API for this project was a REST API written in python by using [Flask](https://flask.palletsprojects.com/en/2.3.x/). It has around 50 routes most of which can be further expanded on by adding arguements so for example the route for a single reading of data lets you specify the micrbit you want, the offset (i.e. last data point or 2nd last data point etc) and the type (temperature, noise or light level). Then to get specific data was fine as I just had a flux query to get the data for microbit ID x, however it did mean that I had to learn flux which was quite a task in comparision to sql as influx/flux returns multiple tables rather then just one nice combined table like SQL and below you can see an example of a flux statement.
+
+Example of a flux statement and the code in python to get the last record from x microbit with x offset:
+```python
+    #Gets the last record from the table given with the microbit and the offset of the result (i.e if you want the 2nd last result)
+    queryResult = query_api.query('from(bucket: "scc331") ' 
+        '|> range(start: 0) '
+        '|> filter(fn: (r) => r["_measurement"] == "' + str(table) + 'Result") '
+        '|> filter(fn: (r) => r["microbitID"] == "' + str(microbitID) + '")'
+        '|> sort(columns: [\"_time\"], desc: true) '
+        '|> limit(n:1, offset: ' + str(offset) + ')')
+    records = []
+    try:
+        #Gets the time and microbit ID and value for the record from the flux result
+        records.append([queryResult[0].get_time(), queryResult[0].values.get("microbitID"), queryResult[0].get_value()])
+    except: #incase no results were found for the microbit ID
+        records = []
+    return records
+```
+
+When it came to getting aggregated results so for example how many people are in x building then I would first use a SQL statment for the MySQL table (two seperate dbs as Influx is built for just data points) and get the microbit id's for all the zones and areas in the building and then I would get the last known location of all the microbits through flux and count all the walkers with the location the same as any of the zones or areas. Then for just any other routes that would just need to check the MySQL tables then I just have a simple SQL statment to check it and the way that I coded this in python can be seen below with the example of changing a microbits role and was done by using the [mysql connector library](https://www.mysql.com/products/connector/) for python:
+
+```python
+db = mysql.connector.pooling.MySQLConnectionPool(host=mysql_address, user=mysql_user, password=mysql_password, database="SCC331", autocommit=True, pool_reset_session=True, pool_size=5)
+#creates and executes a prepared statement given the query and arguments and then returns the result
+def execute(query, arguments=None):
+    if arguments is None:
+        arguments = []
+    #opens the mysql connection
+    con = db.get_connection()
+    cursor = con.cursor()
+    try: #tries to execute the query
+        cursor.execute(query, arguments)
+        res = cursor.fetchall()
+        return res
+    finally:  #ensures the mysql connection is closed and no memory leaks happen
+        cursor.close()
+        con.close()
+#changes a microbits role given thier ID and the new desired role
+def changeMicrobit(microbitID,type):
+    try:
+        execute("update microbit_dhcp set type = %s where microbit_address = %s;", (type, microbitID))
+        return True
+    except:
+       return False
+```
+
+Finally the API itself has authentication through flasks session so a user first must call a login a route with a username and password, this is password is then hashed with bcrypt (what we use to store hashed passwords) and checked if it matches the hash in the dabase and if so that route then returns a cookie that is sent along with each request that states their authentication level and every route has a required auth level the user must be to access it. This means if the user tries to skip a the login page they just get a 404 error rather then any data and this is achieved with the code below:
+
+```python
+#Login route takes a username and password
+@app.route('/login',methods=["GET"])
+def logingRequest():
+    user = request.args.get("user", type=str, default="user")
+    password = request.args.get("password", type=str, default="password")
+    sql = execute("SELECT password, `role` FROM users WHERE username = %s;", (user,))   #gets the users hashed password from the table
+    try:
+        password_hashed = sql[0][0]
+        auth_level = roleFromString(sql[0][1])
+
+        if bcrypt.checkpw(password.encode("utf-8"), password_hashed.encode("utf-8")):   #checks the users hashed password matches the password given once hashed
+            session['logged_in'] = True
+            session['auth_level'] = auth_level
+            return jsonify({"success":True,"auth":auth_level})
+        else:   #if the users password doesn't match then they arent authorised
+            return jsonify({"success": False,"auth":0})
+    except:
+        return jsonify({"success": False,"auth":0})
+
+#This function checks that the user for this session has logged in and has the valid auth level
+def authenticated(requiredRole):
+    def actual_decorator(function):
+        @wraps(function)
+        def authentication(*args, **kwargs):
+            if session:
+                if session['logged_in'] and session['auth_level'] >= int(requiredRole):
+                    return function(*args, **kwargs)
+            return "UNAUTHORISED", 401
+        return authentication
+    return actual_decorator
+
+#every function/route has this attached which calls the authenticated function to check if they are authorised
+@authenticated(Role.Admin)
+def findAddress():
+```
+Finally when it comes to testing of the API along side integration testing and end to end testing I have also unit tested the API to ensure logging in is persistant, routes work and return the correct information and other things. This was achieved through using the unittest library.
+
 
 ## Database
 
