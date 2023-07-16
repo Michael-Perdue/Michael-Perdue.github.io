@@ -5,7 +5,7 @@ categories: [University Projects, 3rd year]
 tags: [java, c++, python, flask, grafana, influx, sql, microbits]  # TAG names should always be lowercase
 ---
 
-Note this project was completed in a group of 3 people with a rotating scrum master between each 3 of us and my role was everything except front end (I made the graphing page for the front end but that was just embedding grafana through an iFrame) and I didn't really work on the microbits embedded side of things this time unlike the [previous project (Smart Lab)](https://michael-perdue.github.io/posts/Smart-Lab/) that I did work on the microbits extensively and this projects extends that previous project. So I was focused on the Base Station, API, InfluxDB, MySQL DB and grafana for this project.
+Note this project was completed in a group of 3 people with a rotating scrum master between each 3 of us and my role was everything except front end (I made the graphing page for the front end but that was just embedding grafana through an iFrame) and work too much on the microbits embedded side of things this time unlike the [previous project (Smart Lab)](https://michael-perdue.github.io/posts/Smart-Lab/) that I did work on the microbits extensively and this projects extends that previous project. So I was focused on the Base Station, API, InfluxDB, MySQL DB and grafana for this project.
 
 # TLDR of the project
 
@@ -136,8 +136,9 @@ def findAddress():
 ```
 Finally when it comes to testing of the API along side integration testing and end to end testing I have also unit tested the API to ensure logging in is persistant, routes work and return the correct information and other things. This was achieved through using the unittest library.
 
-
 ## Database
+
+The project uses two databases a Influx database and a MySQL database. The Influx db is used to store data points so it stores the date time, microbit ID, type of data and value of a data point. This then also can be easily mapped onto a graph using grafana and setting up a date/time line graph which made making the graphs nicer then just using MySQL. MySQL is used for storing the users details (passwords and usernames) and the overall logical structure of the system so the buildings,areas,zones etc along with the microbit information of what each microbit's role and ID is.
 
 # The systems features
 
@@ -153,11 +154,15 @@ Here is how the system looks from the hardware sides of things:
 
 In the demo above you can see the system in practive where each of the clusters are a room and its microbits asocciated with that room (note in practice and it has been tested in much bigger environments but for the sake of recording that is not possible to show). The computer then which has a base camp microbit attached to it and then this bace camp continually flashes B to let you know it has just processed some messages. Then on the actual computer proccessing the messages you can see it has a console window which is prints the amount of messages proccessed a second, the microbits that are connecting and disconnecting to this basecamp and any errors. Finally the computer shows the of the homepage dashboard of the website with live data.
 
-## Realtime environmental data
+## Realtime environmental data (including location tracking)
 
 Each microbit sensors records the temperature, light and noise level through the built in hardware of a microbit. The temperature value is measured in celcius, however both light and noise are measured from an arbiturary value so light is just on a scale of 0 to 255 and noise is just a reading in the 9000s so we coverted these to be thresholds meaning if its below x then display that its 'quiet' or for lights its 'dark'. Then each of these are displayed on the website home page under the zone, area and room the sensor is located in.
 
-Finally the other evnrionmental data that we took the capacity of each zone, and this was effectively just the amount of people with microbits in each zone. This worked off each walker sending out pings to other sensors to find the closest microbit then this location would be reported back every 5 seconds and this is then be stored and the api only returns the capacity from records in the last 5 mins to ensure non-active microbits which could have left the zone and are no longer near any zones aren't still being recorded. No walker is ever counted more then once as it goes of its id and finds the last record and only the last one.
+Finally the other evnrionmental data that we took the capacity of each zone, and this was effectively just the amount of people with microbits in each zone. This worked off each walker sending out pings to other sensors to find the closest microbit then this location would be reported back every 10 seconds and this is then be stored and the api only returns the capacity from records in the last 5 mins to ensure non-active microbits which could have left the zone and are no longer near any zones aren't still being recorded. No walker is ever counted more then once as it goes of its id and finds the last record and only the last one.
+
+Here you can see a video of the location tracking working looking on the left screen you will see the current capacity numbers change within 10 seconds of the microbit walker being moved and you can also see the live temp,noise and light level:
+
+[![Location tracking](https://i.ytimg.com/vi/U2OOp0CowE4/hqdefault.jpg)](https://www.youtube.com/watch?v=U2OOp0CowE4 "Location tracking")
 
 ## Light actuation
 
@@ -171,13 +176,45 @@ Here is a video of the a walker trying to open a door they dont have permission 
 
 ![](https://michael-perdue.github.io/assets/DoorToolkit.gif)
 
+
 ## Graphs of live and historic data
 
-## Fully managable system from the front end
 
-### System structure management
+## System structure management
 
-### User management
+## User management
 
-### Microbit management
+# Costings of the system
 
+|               | Hardware               | Amount                       | Cost per hardware | Total cost    | Cost of whole organisation                                                                                                          |
+|---------------|------------------------|------------------------------|-------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------|
+| Small System  | Micro:bit              | 15                           | £15               | £225          | £447 initial and £120 upkeep per year                                                                                               |
+|               | Bat:bit3(battery pack) | 15                           | £9                | £135          |                                                                                                                                     |
+|               | Rechargeable Batteries | 30                           | £2                | £60           |                                                                                                                                     |
+|               | Base Station PC        | 1                            | £27               | £27           |                                                                                                                                     |
+|               | VPS                    | 1                            | £120 per year     | £120 per year |                                                                                                                                     |
+| Medium System | Microbit               | 50                           | £15               | £750          | £1,508 initial and £240 upkeep per year                                                                                             |
+|               | Bat:bit3(battery pack) | 50                           | £9                | £450          |                                                                                                                                     |
+|               | Rechargeable Batteries | 100                          | £2                | £200          |                                                                                                                                     |
+|               | Base Station PC        | 4                            | £27               | £108          |                                                                                                                                     |
+|               | VPS                    | 2                            | £120 per year     | £240 per year |                                                                                                                                     |
+| Large System  | Microbit               | 150                          | £15               | £2,250        | £3,516 initial and £600 upkeep per year                                                                                             |
+|               | Bat:bit3(battery pack) | 150                          | £9                | £450          |                                                                                                                                     |
+|               | Rechargeable Batteries | 300                          | £2                | £600          |                                                                                                                                     |
+|               | Base Station PC        | 4                            | £27               | £216          |                                                                                                                                     |
+|               | VPS                    | 4                            | £120 per year     | £600 per year |                                                                                                                                     |
+| Custom System | Microbit               | Mc                           | £15               | Mc*15         |                                                                                                                                     |
+|               | Bat:bit3(battery pack) | Bp = Amount of microbits     | £9                | Bp*9          |                                                                                                                                     |
+|               | Recargable Batteries   | Rb = Amount of microbits*2   | £2                | Rb*2          |                                                                                                                                     |
+|               | Base Station PC        | Bs = Amount of microbits/20  | £27               | Bs*27         |                                                                                                                                     |
+|               | VPS                    | VPS = Amount of microbits/40 | £120 per year     | VPS*120       |                                                                                                                                     |
+|               |                        |                              |                   |               | £29.25Mc = initial setup cost where Mc is total number of microbits as system = 15Mc + 9Bp + 2Rb + 27B which = 15Mc + 4Mc + 1.35Mc  |
+|               |                        |                              |                   |               | £3Mc as VPS is just microbit/40 *120 = upkeep per year where Mc is the amount of microbits in a system                              |
+
+## Total costings Hardware
+Small system = £447 initial hardware + £120 Vps upkeep per year 
+Medium system = £1,508 initial hardware + £240 Vps upkeep per year		
+Large system = £3,516 initial hardware + £600 Vps upkeep per year
+Custom system = £29.35 initial hardware per microbit + £3 Vps upkeep per year per microbit
+
+*Note this does not calculate/include the electricity cost as it fluctuates and due to limited testing we do not know how much would be consumed 
