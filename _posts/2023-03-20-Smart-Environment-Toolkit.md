@@ -2,10 +2,10 @@
 title: Smart Environment Toolkit
 date: 2023-03-20
 categories: [University Projects, 3rd year]
-tags: [java, c++, python, flask, grafana, influx, sql, microbits]  # TAG names should always be lowercase
+tags: [java, c++, python, flask, grafana, influx, sql, microbits, rest api]  # TAG names should always be lowercase
 ---
 
-Note this project was completed in a group of 3 people with a rotating scrum master between each 3 of us and my role was everything except front end (I made the graphing page for the front end but that was just embedding grafana through an iFrame) and work too much on the microbits embedded side of things this time unlike the [previous project (Smart Lab)](https://michael-perdue.github.io/posts/Smart-Lab/) that I did work on the microbits extensively and this projects extends that previous project. So I was focused on the Base Station, API, InfluxDB, MySQL DB and grafana for this project.
+This project was completed in a group of 3 people with a rotating scrum master between each 3 of us and my role was everything except front end (I made the graphing page for the front end but that was just embedding grafana through an iFrame) and work too much on the microbits embedded side of things this time unlike the [previous project (Smart Lab)](https://michael-perdue.github.io/posts/Smart-Lab/) that I did work on the microbits extensively and this projects extends that previous project. So I was focused on the Base Station, API, InfluxDB, MySQL DB and grafana for this project.
 
 # TLDR of the project
 
@@ -186,7 +186,7 @@ As you can see in the previous screenshots, gifs and videos you can manage the w
 
 Below I have included the design mockups of the system (rather then just a massive amount of webpages) and the only thing to note is institutes was instead renamed to area to fit a better generalisible system:
 
-![](https://michael-perdue.github.io/assets/ToolKitPages.gif)
+![](https://michael-perdue.github.io/assets/ToolKitPages.png)
 
 # Costings of the system
 
