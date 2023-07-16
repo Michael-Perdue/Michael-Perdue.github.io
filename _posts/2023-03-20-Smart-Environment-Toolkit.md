@@ -166,7 +166,7 @@ Here you can see a video of the location tracking working looking on the left sc
 
 ## Light actuation
 
-Here is a video of the a microbit being made a sensor then turning that sensors light on:
+Here is a video of the a microbit being made a sensor via the website and then on the website turning that sensors light on:
 
 ![](https://michael-perdue.github.io/assets/LightToolkit.gif)
 
@@ -180,9 +180,13 @@ Here is a video of the a walker trying to open a door they dont have permission 
 ## Graphs of live and historic data
 
 
-## System structure management
+## System structure and user management 
 
-## User management
+As you can see in the previous screenshots, gifs and videos you can manage the whole system from the front end. So you can not only make new zones which are just clusters of areas and an area is just user defined so a floor, a building or whatever depending on the scenario but you can also easily manage all the microbits in those zones. None of the system is hardcoded which means that everything can be catered to end user and we successfully tested this by using the same system to make a smart campus then a smart hotel with no code being changed. The result of which showed their was zero issues in swapping between the two and their was no issues with the system not being able to adapt to the different scenarios. In addition their is two user levels a user and an admin the user can create an account and an admin can promote a user to an admin, delete an account and only admins can configure the system.
+
+Below I have included the design mockups of the system (rather then just a massive amount of webpages) and the only thing to note is institutes was instead renamed to area to fit a better generalisible system:
+
+![](https://michael-perdue.github.io/assets/ToolKitPages.gif)
 
 # Costings of the system
 
