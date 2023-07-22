@@ -72,4 +72,4 @@ The ingame UI:
 
 This is a short demo of the finished game:
 
-[![Campus Crawl Demo](https://img.youtube.com/vi/29R-4SPj_A8/0.jpg)](https://www.youtube.com/watch?v=29R-4SPj_A8)
+{% include embed/youtube.html id='29R-4SPj_A8' %}
