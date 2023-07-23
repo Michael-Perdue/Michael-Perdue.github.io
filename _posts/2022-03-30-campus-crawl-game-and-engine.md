@@ -7,7 +7,7 @@ tags: [csharp]     # TAG names should always be lowercase
 
 ## Tile engine
 
-The game which I made was based off a tile engine that was made by someone I was working with and was specifically made for this project. The engine created for this project, “tileEngine”, is a ground-up game engine, relying only upon the widely used MonoGame graphics library for convenient sprite batch draw calls, and serialization libraries for writing and reading data from file. It is split down into several modular sections, namely the editor, platform specific player implementations, documentation, and SDK.
+The game which I made was based off a tile engine that was made by someone I was working with and was specifically made for this project. The engine created for this project, “tileEngine”, is a ground-up game engine, relying only upon the widely used MonoGame graphics library for convenient sprite batch draw calls, and serialization libraries for writing and reading data from file. It is split down into several modular sections, namely the editor, platform specific player implementations, documentation, and SDK. Whilst I did not code the tile engine I worked closely with them to tell them what is needed, test features and help debug any problems that came from this newly built engine.
 
 The UI of tile engine:
 
@@ -16,7 +16,7 @@ The UI of tile engine:
 ### Editor
 The engine’s editor is built upon a modified version of the open source DarkUI using WinForms and allows the user to build and create dynamic tiled maps, manage events and mark tiles for collision for these maps without the need for manual programming.
 
-example of making an event: 
+Example of making an event: 
 
 ![](https://michael-perdue.github.io/assets/editorevent.png)
 
@@ -49,7 +49,6 @@ The enemy combat works of the basis of different enemy types. Depending on the t
 
 Player combat works in a similar way to the enemy combat, with the only differences being that they trigger attacks with their mouse and have a reduced cooldown in between attacks. The player can click left mouse button to perform the basic attack of the weapon, by default the player has fists as weapons, and they can perform the special attack through right click. Unlike the enemy they can hold right click to perform a charged special attack. The player has 100 health and has a speed of 110 units while the default enemy has a speed of 100 units and 100 health. Upon players health reaching zero they will respawn at a set point and the wave they reached will be reset to wave 1.
 
-Below is a gif of the combat system in action:
 
 ### Wave system
 
@@ -67,6 +66,7 @@ When it comes to sound in the game for Alexandra Square there is a background no
 
 The ingame UI:
 
+![](https://michael-perdue.github.io/assets/uibar.png)
 
 ### Short demo of the game as whole
 

@@ -3,6 +3,7 @@ title: Smart Environment Toolkit
 date: 2023-03-20
 categories: [University Projects, 3rd year]
 tags: [java, c++, python, flask, grafana, influx, sql, microbits, rest api]  # TAG names should always be lowercase
+pin: true
 ---
 
 This project was completed in a group of 3 people with a rotating scrum master between each 3 of us and my role was everything except front end (I made the graphing page for the front end but that was just embedding grafana through an iFrame) and work too much on the microbits embedded side of things this time unlike the [previous project (Smart Lab)](https://michael-perdue.github.io/posts/Smart-Lab/) that I did work on the microbits extensively and this projects extends that previous project. So I was focused on the Base Station, API, InfluxDB, MySQL DB and grafana for this project.
