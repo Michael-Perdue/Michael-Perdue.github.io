@@ -53,7 +53,7 @@ The embed that is returned looks like this:
 
 So discord for some reason has no way on the user side to delete messages from a channel or a user other then manually deleting each message which is very tedious. They do let you delete up to the last 7 days of a users messages if you permanently ban a user but that is all it allows. So below are commands to delete all of a users message from a channel or server and delete messages from a channel.
 
-### Deleting a user's messages in a channel
+### Deleting all user's messages in a channel
 
 Command: *!delete @user*
 
@@ -61,7 +61,7 @@ Using the command *!delete* followed by the @user you want to delete will lead t
 
 Below is a gif of this comand in use:
 
-### Deleting a user's messages in a channel
+### Deleting all a user's messages
 
 Command: *!delete @user all*
 
@@ -99,3 +99,54 @@ To ban a user all you need to do is type *!ban* followed by the user and then th
 Below is a gif of this command in use:
 
 # Clock functionality
+
+## Stopwatch
+
+### Starting the stopwatch
+
+Command: *!stopwatch start*
+
+### Checking the stopwatch
+
+Command: *!stopwatch time*
+
+### Stopping the stopwatch
+
+Command: *!stopwatch stop*
+
+## Timer
+
+Command: *!timer x*
+x being the amount of seconds you want the timer to go off in
+
+## Countdown
+
+Command: *!countdown x*
+x being the number you want the countdown to start at
+
+# Fun functionality
+
+## Coin flip
+
+command: *!coin x*
+x being the number of times you want to flip the coin
+
+## Dice rolls
+
+command: *!dice x y*
+x being the number of dice you want to roll
+y being the number of sides on the dice
+
+# Messaging funcitonality
+
+## Forwading
+
+command: *!forward @user message* or *!forward @role message*
+
+## Mirror 
+
+command: *!mirror message* 
+
+## Mirror 
+
+command: *!mirror message* 
