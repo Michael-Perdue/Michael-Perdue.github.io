@@ -116,7 +116,7 @@ Below is a gif of this command in use:
 
 Below is a gif of the stopwatch functionality working with all 3 command variations:
 
-![](https://michael-perdue.github.io/assets/Discord-Stopwatch-command.gif)
+![](https://michael-perdue.g    ithub.io/assets/Discord-Stopwatch-command.gif)
 
 ### Starting the stopwatch
 
