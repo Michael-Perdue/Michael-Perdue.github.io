@@ -21,7 +21,7 @@ timezone:
 
 title: Michael Perdue                          # the main title
 
-tagline: A collection of some of my projects over the years   # it will display as the sub-title
+tagline: A collection of my coding projects over the years   # it will display as the sub-title
 
 description: >-                        # used by seo meta and the atom feed
   These are the projects that I have made or worked on in the past few years
@@ -32,8 +32,8 @@ url: 'https://Michael-Perdue.github.io'
 github:
   username: Michael-Perdue             # change to your github username
 
-twitter:
-  username: twitter_username            # change to your twitter username
+#twitter:
+#  username: twitter_username            # change to your twitter username
 
 social:
   # Change to your full name.
@@ -71,7 +71,7 @@ google_analytics:
 #     light  - Use the light color scheme
 #     dark   - Use the dark color scheme
 #
-theme_mode:  # dark
+theme_mode: #dark
 
 # The CDN endpoint for images.
 # Notice that once it is assigned, the CDN url
