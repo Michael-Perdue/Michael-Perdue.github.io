@@ -3,6 +3,7 @@ title: How to setup a Discord bot and how my Discord Helper Bot Works
 date: 2023-07-23
 categories: [Additional Projects, Discord Bot Project]
 tags: [python, discord]  # TAG names should always be lowercase
+pin: true
 ---
 
 This page focuses on the design of the bot, how it achieves its functionality and the reasons behind some of the choices made while coding the bot. If you want to see gifs of the bot working or if you care more about just what the bot offers for the end user then go to [this page](https://michael-perdue.github.io/posts/My-Discord-Bots-Functions/). This page won't cover all the functionality as some of the commands are self-explanatory in how they work and are coded. [Click here for the GitHub repo for this project](https://github.com/Michael-Perdue/Discord-Helper-Bot)
@@ -129,14 +130,14 @@ async def setup(bot: commands.Bot) -> None:
 
 ### The bot is complete
 
-Provided you have both the files shown above (<span>messaging.py</span> and <span>main.py</span>), then the bot now should run with no issues running the code and having the bot work. If you don't have a discord token or you haven't added the bot to your server I suggest you look at this tutorial which takes you through the steps of the initial setup https://www.ionos.co.uk/digitalguide/server/know-how/creating-discord-bot/ . Upon completing the step-by-step instructions in that guide you should then be able to run the bot.
+Provided you have both the files shown above (<span>messaging.py</span> and <span>main.py</span>), then the bot now should run with no issues running the code and having the bot work. If you don't have a discord token or you haven't added the bot to your server I suggest you look at this tutorial which takes you through the steps of the initial setup https://www.ionos.co.uk/digitalguide/server/know-how/creating-discord-bot/. Upon completing the step-by-step instructions in that guide you should then be able to run the bot.
 
 ## The use of global slash commands
 
 ### What slash commands are in discord
 By default, all commands in Discord you make are done through a command prefix like '!' followed by the command and the arguments e.g. *!roll 1 6*. The issue with this is there is no auto-complete and you don't get told the description or arguments needed for the command. Discord does automatically make a *!help* command which lets you see an exhaustive list of all commands, arguments and descriptions but continually cross-referencing this is tedious so that's where slash commands come in. 
 
-Slash commands work by the user typing '/' then it lists all of the commands which you can use and their description. Upon typing one of the commands you will then get the arguments popping up and each of the arguments will have its description once you select an argument it will show you options if the argument is restrictive (i.e True or Flase or you must give a user's @).
+Slash commands work by the user typing '/' then it lists all of the commands which you can use and their description. Upon typing one of the commands you will then get the arguments popping up and each of the arguments will have its description once you select an argument it will show you options if the argument is restrictive (i.e. True or Flase or you must give a user's @).
 
 Below is an example of how my bots slash commands look like:
 
@@ -144,9 +145,125 @@ Below is an example of how my bots slash commands look like:
 
 ### How to implement slash commands
 
+There are around 5 different ways in which you can implement slash commands, the way that this page implements it is through hybrid commands. The reason to use hybrid commands as the way to implement it is that it lets you keep using cogs and the code change in the cogs is very minimal compared to the other ways which require any code you previously wrote to be completely changed. Another nice feature of a hybrid command is that the command can be used with command prefix like "!" and a slash so doing */roll* and *!roll* performs the same command, this is nice as it means during testing if you have issues with syncing the slash command you can still test the command just without the slash.
 
+To implement hybrid commands you must specify every argument type otherwise it will not work and the command won't pop up as an option. Below is a snippet of code from my bot showing an example of a hybrid command within a Cog:
 
-## How the moderation cog works
+```python 
+from discord.ext import commands
+
+class Clock(commands.Cog):
+
+    @commands.hybrid_command(name="countdown", description="Counts down from the number given.")
+    async def countdown(self, ctx: commands.Context, start: int) -> None:
+        """
+        This function deals with a user sending a !countdown or /countdown command, and a number the bot then
+        will send back a message of the number after minusing one after every second to work like a countdown.
+        Example command: '/countdown 3' and the bot will respond with a message saying '3' then '2' then '1' all
+        with one second between and then send a message saying the countdown is done.
+        :param ctx: the context of the message
+        :param start: an int of the number you want the bot to countdown from
+        """
+        # Starting from the number given the code loops minusing 1 from the value each time till it hits zero
+        await ctx.send(start)
+        for x in range(start-1,0,-1):
+            await asyncio.sleep(1)      # waits a second before sending the number
+            await ctx.channel.send(x)   # sends the number the countdown is at to the channel
+        # Waits a second before sending a notification and message stating the countdown is done
+        await asyncio.sleep(1)  
+        await ctx.channel.send(ctx.author.mention + " countdown done")
+
+        # 'await' in the code above is used for asyncronous coding and means that at that point,
+        #  the program is waiting for the result of command after the await and it can switch to another task
+
+```
+
+### How to get the slash commands synced and on the discord servers
+
+So to use these commands on any server you must sync them which is something that you don't have to do with normal commands that don't use slashes. So when coding the bot one thing which can become a big issue is where you sync the commands and this is because your bot will be heavily throttled if you aren't careful as Discord's API does not like you syncing a lot. So using it in the on-ready hook wouldn't work well as you are likely to restart the bot quite often which would lead to your bot being throttled. The best way that I have found to implement this is to add a user command which only the owner of the bot can use that syncs the bot's commands. 
+
+Below is the command which you need to add to the bot to allow just you the owner to sync commands:
+
+```python 
+@bot.command()
+@commands.guild_only()  # Makes it so the command can only be used in a server/guild
+@commands.is_owner()    # Makes it so only the OWNER OF THE BOT can use the command
+async def sync(ctx: commands.Context) -> None:
+    synced = await ctx.bot.tree.sync()
+    await ctx.send("Synced "+str(len(synced))+" commands")
+```
+The code above can be called by the owner of the bot with *!sync* in any server the bot is in and it will sync all servers. You only ever need to use sync when you add a new command or change the details of a command (description, name or arguments), this is due to the bot keeping the knowledge of commands persistently so the commands you sync will still be there over multiple restarts/crashes.
+
+### How to implement sub-commands to slash commands
+
+You can make sub-commands for slash commands by using hybrid groups. A great way to understand this is with my stopwatch command for the helper bot, so what a hybrid group does is make it so you can't call */stopwatch* you must instead call */stopwatch* followed by a sub-command which in this case would be start, stop or time and that looks like */stopwatch start*. This isn't usable in every example as sometimes you want to call the default command with no sub-commands but a stopwatch is a perfect use case of it as you would never want the user to just call */stopwatch* as what would that do so this way the user can either start, stop or check the time of the stopwatch. What this also means is each command first goes through the stopwatch function meaning if they have a common line of code or such you could put it there and it allows you that scalability.
+
+Below is code from my discord helper bot, it shows the hybrid group inside the clock cog. It may seem complex but please note the multiple line *ctx.send* is just for an appealing discord embedded message, it could very much be replaced with just *ctx.send(time_elapsed)* and the code would still work. The log_message() function is for local terminal logging and is not needed but is there for completeness of code:
+
+```python 
+class Clock(commands.Cog):
+    stopwatches = {}
+
+    @commands.hybrid_group(name="stopwatch", description="Simply a working stopwatch")
+    async def stopwatch(self,ctx : commands.Context):
+        """
+        This function is called first upon the user sending a /stopwatch command, and has 3 options start, time and stop.
+        Start will store the user and the time in a key value pair and stop will then retrieve the time and see
+        how long has passed and return that to the user and time will retrieve the start time and how long has passed.
+        Example command: '/stopwatch start' and '/stopwatch stop'
+        :param ctx: the context of the message
+        """
+
+    @stopwatch.command(name="start",description="starts the stopwatch")
+    async def stopwatch_start(self, ctx: commands.Context):
+        """
+        This function is called by /stopwatch start.
+        It stores a key value pair into stopwatches with the current time,
+        the bot then sends a message stating the stopwatch has started.
+        It also locally to the terminal logs the use of the command with log_message().
+        :param ctx: the context of the message
+        """
+        self.stopwatches[ctx.message.author] = time.time()
+        log_message(ctx, "Stopwatch command started:\n")
+        await ctx.send("Stopwatch started")
+
+    @stopwatch.command(name="stop",description="stops the stopwatch")
+    async def stopwatch_stop(self, ctx: commands.Context):
+        """
+        This function is called by /stopwatch stop.
+        It removes the key value pair of the user who typed the command and,
+        the bot then sends a message back stating the time started, stopped and seconds passed.
+        It also locally to the terminal logs the use of the command with log_message().
+        :param ctx: the context of the message
+        """
+        time_elapsed = time.time()-self.stopwatches[ctx.message.author]
+        await ctx.send(embed=discord.Embed(title="Stopwatch",
+                                           description=(ctx.message.author.mention + " You have stopped your stopwatch "),
+                                           colour=discord.Colour.blue()
+                                           ).add_field(name="Start time", value=str(time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(self.stopwatches[ctx.message.author]))), inline=True
+                                           ).add_field(name="Stop time", value=str(time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(time.time()))), inline=True
+                                           ).add_field(name="Time elapsed", value="{:.2f}".format(time_elapsed) + " seconds", inline=False))
+        self.stopwatches.pop(ctx.message.author)
+        log_message(ctx, "Stopwatch command stopped:\n   time elapsed: " + str(time_elapsed) + " seconds\n")
+
+    @stopwatch.command(name="time",description="gets the stopwatches time")
+    async def stopwatch_time(self, ctx: commands.Context):
+        """
+        This function is called by /stopwatch time.
+        It gets the bot to sends a message back stating the time started and seconds passed.
+        It also locally to the terminal logs the use of the command with log_message().
+        :param ctx: the context of the message
+        """
+        time_elapsed = time.time()-self.stopwatches[ctx.message.author]
+        await ctx.send(embed=discord.Embed(title="Stopwatch",
+                                           description=(ctx.message.author.mention + " Information on your stopwatch "),
+                                           colour=discord.Colour.blue()
+                                           ).add_field(name="Start time", value=str(time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(self.stopwatches[ctx.message.author]))), inline=True
+                                           ).add_field(name="Time elapsed", value="{:.2f}".format(time_elapsed) + " seconds", inline=False))
+        log_message(ctx, "Stopwatch command time checked:\n   time elapsed: " + str(time_elapsed) + " seconds\n")
+```
+
+## How the helper bot's moderation cog works
 
 ## How the messaging cog works
 
