@@ -203,6 +203,9 @@ The embed message looks like this:
 {: .prompt-info }
 >Example use: */timer 1 10 10*  
 {: .prompt-tip }
+
+You can get the bot to notify you after a set amount of time by typing */timer* followed by the number of hours, minutes and seconds that you want to wait. It's optional to enter hours, minutes and seconds meaning if you only want to wait seconds you don't need to fill out the hours or minutes as it defaults to 0. 
+
 Below is a gif of the timer command working:
 
 ![](https://michael-perdue.github.io/assets/Discord-Timer-command.gif)
@@ -220,6 +223,8 @@ Here is a screenshot of the 1 hour timer going off which was set at the end of t
 >Example use: */countdown 3'*  
 {: .prompt-tip }
 
+You can get the bot to countdown from a given number by typing */countdown* followed by the number you want the bot to countdown from and after reaching 1 the bot will notify you stating it's finished. 
+
 Below is a gif of the countdown command working:
 
 ![](https://michael-perdue.github.io/assets/Discord-Countdown-command.gif)
@@ -234,6 +239,7 @@ Below is a gif of the countdown command working:
 >Example use: */8ball 'will it rain?'*  
 {: .prompt-tip }
 
+You can get the bot to answer your question with an eightball response by typing */8ball* followed by the question you want the bot to answer. The bot will then respond with a random answer from the possible answers an eight ball could give. 
 
 Below is a gif of the eight-ball flip command working:
 
@@ -246,6 +252,8 @@ Below is a gif of the eight-ball flip command working:
 {: .prompt-info }
 >Example use: */coin 2*  
 {: .prompt-tip }
+
+You can get the bot to flip a coin or multiple coins by typing */coin* followed by the number of times you want the bot to flip the coin. The bot will then respond with a series of results (heads and or tails). 
 
 Below is a gif of the coin flip command working:
 
@@ -260,6 +268,8 @@ Below is a gif of the coin flip command working:
 >Example use: */dice 1 6*  
 {: .prompt-tip }
 
+You can get the bot to roll dice for you by typing */dice* followed by the amount of dice you want it roll and the number of sides on the dice. The bot will then respond with the roll result of the dice. 
+
 Below is a gif of the dice roll command working:
 
 ![](https://michael-perdue.github.io/assets/Discord-Roll-command.gif)
@@ -273,6 +283,8 @@ Below is a gif of the dice roll command working:
 >Example use: */hey*  
 {: .prompt-tip }
 
+The bot can greet you if you type /hey it will respond with Hello followed by your name.
+
 Below is a gif of the greeting command working:
 
 ![](https://michael-perdue.github.io/assets/Discord-Hey-command.gif)
@@ -284,6 +296,8 @@ Below is a gif of the greeting command working:
 {: .prompt-info }
 >Example use: */mirror 'I am not a bot'*  
 {: .prompt-tip }
+
+The bot can anonymously send your message to the channel by typing */mirror* followed by the message. The bot will then respond with an ephemeral message which will delete instantly so that no one can see that you sent the message and then the bot will simply send your message to the channel.
 
 Below is a gif of the mirror command working:
 
@@ -298,6 +312,8 @@ Below is a gif of the mirror command working:
 >Example use: */forward @michael 'stop that'*  
 {: .prompt-tip }
 
+The bot can anonymously forward your message to someone in the channel by typing */forward* followed by the person or group you want to mention and the message. The bot will then respond with an ephemeral message which will delete instantly so that no one can see that you sent the message and then the bot will forward the message by mentioning the person in the channel and then sending your message to the channel. **This command doesn't need you to be an administrator however it does send a log to the moderation channel stating who got the bot to forward the message, what the message was and who it was to.**
+
 Below is a gif of the forwarding command working:
 
 ![](https://michael-perdue.github.io/assets/Discord-Forward-command.gif)
@@ -310,6 +326,10 @@ Below is a gif of the forwarding command working:
 {: .prompt-info }
 >Example use: */spam @everyone 10*  
 {: .prompt-tip }
+
+You can spam a group or user by typing */spam* followed by the number of times you want to notify them. The bot will then reply to that command (everyone can see who told the bot to spam) and send that many messages with them mentioned. 
+
+**This command does not send a log to the moderation channel as everyone can see who got the bot to do it, and if administrators get annoyed by this command you can disable it by adding */ban* to the banned word list**
 
 Below is a gif of the Spam command working:
 
