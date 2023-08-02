@@ -11,7 +11,7 @@ This page focuses on the design of the bot, how it achieves its functionality an
 
 ### The Overall structure of the bot
 
-Diagram of what happens on the launch of the bot You can ignore the banned_words.txt node as that isn't needed for every bot its just mine which implements a banned word list:
+Below is a diagram of what happens on the launch of my helper bot. You can ignore the banned_words.txt node as that isn't needed for every bot its just mine which implements a banned word list, the rest of the diagram is what every bot that uses cogs goes through:
 
 ![](https://michael-perdue.github.io/assets/Discord-Diagram-structure.PNG)
 
@@ -133,7 +133,20 @@ Provided you have both the files shown above (<span>messaging.py</span> and <spa
 
 ## The use of global slash commands
 
+### What slash commands are in discord
 By default, all commands in Discord you make are done through a command prefix like '!' followed by the command and the arguments e.g. *!roll 1 6*. The issue with this is there is no auto-complete and you don't get told the description or arguments needed for the command. Discord does automatically make a *!help* command which lets you see an exhaustive list of all commands, arguments and descriptions but continually cross-referencing this is tedious so that's where slash commands come in. 
 
+Slash commands work by the user typing '/' then it lists all of the commands which you can use and their description. Upon typing one of the commands you will then get the arguments popping up and each of the arguments will have its description once you select an argument it will show you options if the argument is restrictive (i.e True or Flase or you must give a user's @).
+
+Below is an example of how my bots slash commands look like:
+
+![](https://michael-perdue.github.io/assets/Discord-Slash-Command.PNG)
+
+### How to implement slash commands
+
+
+
 ## How the moderation cog works
+
+## How the messaging cog works
 
