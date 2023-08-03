@@ -3,6 +3,7 @@ title: What My Discord Helper Bot Does
 date: 2023-07-23
 categories: [Additional Projects, Discord Bot Project]
 tags: [python, discord]  # TAG names should always be lowercase
+pin: true
 ---
 
 This page focuses on what different functions/utilities the helper bot provides to the user and the motivation behind the bot. If you want to see the inner workings of the bot explained then look at [this page](https://michael-perdue.github.io/posts/How-My-Discord-Bot-Works/), and if you want to just see the code then click [here for the public GitHub repo of the bot](https://github.com/Michael-Perdue/Discord-bot). 

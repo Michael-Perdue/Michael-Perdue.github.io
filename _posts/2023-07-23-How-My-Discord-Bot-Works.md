@@ -1,6 +1,6 @@
 ---
 title: How to setup a Discord bot and how my Discord Helper Bot Works
-date: 2023-07-23
+date: 2023-07-30
 categories: [Additional Projects, Discord Bot Project]
 tags: [python, discord]  # TAG names should always be lowercase
 pin: true
