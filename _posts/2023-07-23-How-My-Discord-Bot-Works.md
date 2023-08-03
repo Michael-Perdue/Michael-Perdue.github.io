@@ -373,7 +373,7 @@ When adding and removing a word from the list through the two commands */banword
 
 ### Deleting the last x messages from a channel
 
-Using */clear* lets you delete the last x messages from a channel and the implementation is very easy to do compared to deleting messages from a specific user. This is because there is a purge function which can delete a max 100 messages each time it is called and this goes into effect after about 3 seconds. So to allow the last x messages to be deleted it loops in a for loop deleting up to 100 messages at a time then once the remainder needing to be deleted is less than 100 it just deletes that many. You must also be an administrator to run the command for obvious reasons. The code for this is below:
+Using */clear* lets you delete the last x messages from a channel and the implementation is very easy to do compared to deleting messages from a specific user. This is because there is a purge function which can delete a max 100 messages each time it is called and this goes into effect after about 3 seconds. So to allow the last x messages to be deleted it loops in a for loop deleting up to 100 messages at a time then once the remainder needing to be deleted is less than 100 it just deletes that many. Then it will send a log to the moderation channel stating who deleted whose messages. You must also be an administrator to run the command for obvious reasons. The code for this is below:
 
 ```python
 @commands.has_permissions(administrator=True)
@@ -398,11 +398,11 @@ async def clear(self,ctx: commands.Context,amount: int) -> None:
 
 ### Deleting messages from a person
 
-Deleting messages from a person is much harder because there the purge function has a limit of 100 when searching for messages to delete. The catch of why you can't just continually use the purge is because the limit is not that of deleting but of searching so if the last 100 messages don't contain any messages from the user then none gets deleted and if you call purge again it will do the same thing leading to nothing happening. So to solve this the bot has to get the history of the channel and then manually check each message to see if it's from the user you want to delete the messages from. 
+Deleting messages from a person is much harder because there the purge function has a limit of 100 when searching for messages to delete. The catch of why you can't just continually use the purge is because the limit is not that of deleting but of searching so if the last 100 messages don't contain any messages from the user then none gets deleted and if you call purge again it will do the same thing leading to nothing happening. So to solve this the bot has to get the history of the channel and then manually check each message to see if it's from the user you want to delete the messages from. Then it will send a log to the moderation channel stating who deleted whose messages.
 
 The reason why this workaround is annoying is computationally it's not long but the Discord API limits it to around a deletion a second which means if you want 300 messages deleted from a user then it will take 5 minutes so after each message the bot waits for 1 second (with asyncio so the bot can do other tasks) before it deletes again in order not to get throttled. This also is under the assumption only one person is deleting at a time, if a lot more people do then the bot will get throttled and the speed of deletion will go down even more.
 
-Finally to delete just a specific number the bot just adds a counter and increments every time the bot deletes something and returns once the counter reaches the specified number. In addition if the user wants to delete from all channels the bot gets all the channels in the server goes through the history of each one. Below is the code performing all the functionalities mentioned above:
+Finally to delete just a specific number the bot just adds a counter and increments every time the bot deletes something and returns once the counter reaches the specified number. In addition, if the user wants to delete from all channels the bot gets all the channels in the server and goes through the history of each one. Below is the code performing all the functionalities mentioned above:
 ```python
     async def delete_all_messages(self,channel,member,amount: Optional[int] = -1):
         """
@@ -444,4 +444,6 @@ Finally to delete just a specific number the bot just adds a counter and increme
         await ctx.send("Deletion complete",ephemeral=True)
 ```
 
-## How the stopwatch work
+You can also see a gif of this command work below ([for the page with more gifs on and explains more on the end user functionality of the helper bot click here](https://michael-perdue.github.io/posts/My-Discord-Bots-Functions/) )
+
+![](https://michael-perdue.github.io/assets/Discord-Delete-all-command.gif)
