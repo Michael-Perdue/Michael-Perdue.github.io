@@ -18,7 +18,7 @@ Below is a diagram of what happens on the launch of my helper bot. You can ignor
 
 ### How to get the discord bot to run 
 
-To set up the bot to work you need to create a sub-class of Discord's preexisting [bot class](https://discordpy.readthedocs.io/en/stable/ext/commands/commands.html) and then setup in the init what intents (what you want the bot do), command prefix (what you want commands to use - not important if you end up using slash/hybrid commands) and what cogs the bot will use. Then all you need to do is make an instance of your new bot and call the run function on it in a while loop to ensure the bot keeps running.
+To set up the bot to work you need to create a sub-class of Discord's preexisting [bot class](https://discordpy.readthedocs.io/en/stable/ext/commands/commands.html) and then setup in the init what intents (what you want the bot to do), command prefix (what you want commands to use - not important if you end up using slash/hybrid commands) and what cogs the bot will use. Then all you need to do is make an instance of your new bot and call the run function on it in a while loop to ensure the bot keeps running.
 
 Below is code from my bot with some complexities removed to show the bare bones of what is needed for the bot to function (init, setup_hook etc) and what are functions of the bot you can use:
 
@@ -132,7 +132,7 @@ async def setup(bot: commands.Bot) -> None:
 
 Provided you have both the files shown above (<span>messaging.py</span> and <span>main.py</span>), then the bot now should run with no issues running the code and having the bot work. If you don't have a discord token or you haven't added the bot to your server I suggest you look at this tutorial which takes you through the steps of the initial setup https://www.ionos.co.uk/digitalguide/server/know-how/creating-discord-bot/. Upon completing the step-by-step instructions in that guide you should then be able to run the bot.
 
-## The use of global slash commands
+## How to setup global slash commands
 
 ### What slash commands are in discord
 By default, all commands in Discord you make are done through a command prefix like '!' followed by the command and the arguments e.g. *!roll 1 6*. The issue with this is there is no auto-complete and you don't get told the description or arguments needed for the command. Discord does automatically make a *!help* command which lets you see an exhaustive list of all commands, arguments and descriptions but continually cross-referencing this is tedious so that's where slash commands come in. 
@@ -263,7 +263,64 @@ class Clock(commands.Cog):
         log_message(ctx, "Stopwatch command time checked:\n   time elapsed: " + str(time_elapsed) + " seconds\n")
 ```
 
-## How the helper bot's moderation cog works
+## How the message filtering works
 
-## How the messaging cog works
+### Storing the banned words for the message filtering
+
+So in order to filter messages, you need to store a list of banned words and this list needs to be persistent through crashes of the bot and such. I did think about using MySQL as I have done for previous projects such as the [Smart Environment Toolkit](https://michael-perdue.github.io/posts/Smart-Environment-Toolkit/) but it would be overkill for this problem as all I need to store is an identifier for each server and a list of words. 
+
+So I instead decided to use just a plain text file and store the server's id followed by one space between each banned word. Upon starting the bot it will check if the *banned_words.txt* file exists and if not it will make it, and then it will add all the servers ids it has connected to, to the file with one server on each line. The bot then once it has connected to the servers, it reads the file and makes a dictionary consisting of an id as the key with a list of banned words so that when filtering messages it doesn't need to continually check the file. Below is the code for this:
+
+```python 
+class Bot(commands.Bot):
+    banned_words = {}
+
+    def read_banned_words(self):
+        if not Path("./banned_words.txt").is_file():
+            # creates a new file through opening it on write
+            open("banned_words.txt", "a").close()
+        file = open("banned_words.txt","r")
+        for x in file: # reads each line in the file 
+            split_line = list(x.replace("\n","").split(" ")) # splits the line into a list
+            self.banned_words[int(split_line[0])] = split_line[1:] 
+        file.close()
+
+    def add_guilds(self):
+        file = open("banned_words.txt","a")
+        found_guilds = self.banned_words.keys()
+        for guild in self.guilds:   # loops through all the servers/guilds that the bot is on
+            if guild.id not in found_guilds: # adds the servers id to a new line on the txt file if its not on file
+                file.write(str(guild.id) + "\n")
+                self.banned_words[guild.id] = [] # adds the server id and an empty list to the banned words dict
+        file.close()
+
+    async def on_ready(self):
+        # The on_ready function is called once the bot has gone through connecting to every server.
+        self.read_banned_words()
+        self.add_guilds()
+```
+
+### How the message filtering checks message
+
+The bot as shown above inherits the commands.bot class which has a function that is called every time a message is received called on_message, so I overwrote that function and got it to check each message through regular expression to see if it contains any banned words from the server the message was sent. I also ensured the function still processes the message if it does not contain any banned words, if it does contain a banned word it does not process the message and it deletes the message. In addition, the filter checks that it's not the bot sending the message (as it writes what banned words were used in the mod channel) you the user are not unbanning a word through the !unbanword, the /unbanword does not need to be checked as slash commands act differently. Finally after deleting the message the bot will put in the moderation channel who tried to who what banned word in what channel. Below is the code that does this:
+
+```python
+async def on_message(self, message: Message):
+    # Checks the message isn't from the bot or a user unbanning a word
+    if(message.author.id != self.user.id and "!unbanword" not in message.content):
+        # Creates the list of banned words used
+        check_word = [word for word in self.banned_words[message.guild.id] if(re.search(("(^|\s)"+word+"($|\s)"),message.content))] 
+        if bool(check_word):  # Checks if any banned words were used
+            await message.delete()  # Deletes the message containing banned words
+            # The bot then sends a message to the moderation channel stating who used banned words and what channel
+            await discord.utils.get(message.guild.channels, name="moderation").send(message.author.mention + " just tried to use banned word/s \'" + "\' \'".join(check_word) + "\' in channel: " + message.channel.mention )
+        else:
+            await self.process_commands(message)
+    else:
+        await self.process_commands(message)
+```
+### Adding and removing words from the banned word list
+
+When adding and removing a word from the list through the two commands */banword* and */unbanword* it not only adds/removes it from the text file but also from the bot's banned words list so the effect is instant.
+
 
