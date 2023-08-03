@@ -263,7 +263,7 @@ class Clock(commands.Cog):
         log_message(ctx, "Stopwatch command time checked:\n   time elapsed: " + str(time_elapsed) + " seconds\n")
 ```
 
-## How the message filtering works
+## How the message filtering works for the Helper bot
 
 ### Storing the banned words for the message filtering
 
@@ -367,9 +367,81 @@ When adding and removing a word from the list through the two commands */banword
         # Replies to command with a message that only you can see and sends a log to the mod channel
         await ctx.send("\'" + word + "\' Has now been unbanned",ephemeral=True)
         await self.moderation_channel(ctx).send(ctx.message.author.mention + " has unbanned the word: " + word)
-
 ```
 
-## How mass deleting messages works
+## How mass deleting messages works for my Helper bot with Discord's API
 
-## Other design notes 
+### Deleting the last x messages from a channel
+
+Using */clear* lets you delete the last x messages from a channel and the implementation is very easy to do compared to deleting messages from a specific user. This is because there is a purge function which can delete a max 100 messages each time it is called and this goes into effect after about 3 seconds. So to allow the last x messages to be deleted it loops in a for loop deleting up to 100 messages at a time then once the remainder needing to be deleted is less than 100 it just deletes that many. You must also be an administrator to run the command for obvious reasons. The code for this is below:
+
+```python
+@commands.has_permissions(administrator=True)
+@commands.hybrid_command(name="clear",description="Deletes all of the last x messages from this channel with x being the amount you set")
+async def clear(self,ctx: commands.Context,amount: int) -> None:
+    """
+    :param ctx: the context of the message
+    :param amount: the amount of messages you want to delete
+    """
+    log_message(ctx,"clear command:\n   number of messages being deleted: "+str(amount)+"\n")
+    total = amount
+    await ctx.send("Clearing commencing", ephemeral=True,delete_after=10)
+    for x in range(1+int(amount/100)):   # purge has a max limit of 100 so this determines how many times to run purge
+        if total<100:
+            await ctx.channel.purge(limit=total)
+        else:
+            await ctx.channel.purge(limit=None)
+            total = total-100
+    await ctx.send("Clearing complete", ephemeral=True)
+    await self.moderation_channel(ctx).send(ctx.message.author.mention + " has deleted the last " + str(amount) + " messages from " + ctx.channel.mention)
+```
+
+### Deleting messages from a person
+
+Deleting messages from a person is much harder because there the purge function has a limit of 100 when searching for messages to delete. The catch of why you can't just continually use the purge is because the limit is not that of deleting but of searching so if the last 100 messages don't contain any messages from the user then none gets deleted and if you call purge again it will do the same thing leading to nothing happening. So to solve this the bot has to get the history of the channel and then manually check each message to see if it's from the user you want to delete the messages from. 
+
+The reason why this workaround is annoying is computationally it's not long but the Discord API limits it to around a deletion a second which means if you want 300 messages deleted from a user then it will take 5 minutes so after each message the bot waits for 1 second (with asyncio so the bot can do other tasks) before it deletes again in order not to get throttled. This also is under the assumption only one person is deleting at a time, if a lot more people do then the bot will get throttled and the speed of deletion will go down even more.
+
+Finally to delete just a specific number the bot just adds a counter and increments every time the bot deletes something and returns once the counter reaches the specified number. In addition if the user wants to delete from all channels the bot gets all the channels in the server goes through the history of each one. Below is the code performing all the functionalities mentioned above:
+```python
+    async def delete_all_messages(self,channel,member,amount: Optional[int] = -1):
+        """
+        :param channel: the channel you want to delete messages from
+        :param member: the user whose messages you want to delete
+        :param amount: the number of messages you want to delete by default its -1 meaning all messages
+        """
+        # NOTE history is used over purge with a check lamda due to purge only being able to search the last 100 messages so if the user is not active the command wouldn't have worked
+        all_messages = channel.history(limit=None)
+        count = 0
+        async for message in all_messages:
+            if message.author.id == member.id:
+                count+=1
+                await message.delete()
+                if count >= amount != -1:
+                    return
+                await asyncio.sleep(1)  # This has to be done due to throttle limiting of deletions
+
+    @commands.has_permissions(administrator=True)
+    @commands.hybrid_command(name="delete",description="Deletes all of a specific users messages from this channel or all channels")
+    async def delete_messages(self, ctx: commands.Context, member: discord.Member,amount: Optional[int]=-1,all_channels: Optional[bool]=False) -> None:
+        """
+        :param ctx: the context of the message
+        :param member: the user whose messages you want to delete
+        :param amount: by default all messages are deleted if set to a number, then only that number of messages are deleted
+        :param all_channels: by default is false if set to true then all users messages from all channels are deleted
+        """
+        await ctx.send("Deletion commencing",ephemeral=True,delete_after=10)
+        if all_channels:
+            log_message(ctx, "delete all command:\n   user's messages being deleted: " + str(member) + "\n")
+            channels = ctx.guild.text_channels
+            for channel in channels:
+                await self.delete_all_messages(channel=channel, member=member)
+            await self.moderation_channel(ctx).send(ctx.message.author.mention + " has deleted all of " + str(member.mention) + " messages from all channels")
+        else:
+            log_message(ctx,"delete command:\n   user's messages being deleted: "+str(member)+"\n")
+            await self.delete_all_messages(channel=ctx.channel,member=member,amount=amount)
+            await self.moderation_channel(ctx).send(ctx.message.author.mention + " has deleted " + (str(amount) if amount != -1 else "all") + " of " + str(member.mention) + " messages from " + ctx.channel.mention)
+        await ctx.send("Deletion complete",ephemeral=True)
+```
+
+## How the stopwatch work
