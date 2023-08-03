@@ -6,7 +6,7 @@ tags: [python, discord]  # TAG names should always be lowercase
 pin: true
 ---
 
-This page focuses on the design of the bot, how it achieves its functionality and the reasons behind some of the choices made while coding the bot. If you want to see gifs of the bot working or if you care more about just what the bot offers for the end user then go to [this page](https://michael-perdue.github.io/posts/My-Discord-Bots-Functions/). This page won't cover all the functionality as some of the commands are self-explanatory in how they work and are coded. [Click here for the GitHub repo for this project](https://github.com/Michael-Perdue/Discord-Helper-Bot)
+This page focuses on how to set up your own Discord bot through cogs and hybrid commands from my experience of making the Helper Bot. It also covers the complex parts of the helper bot, how it achieves some of its complex functionality like message filtering and the reasons behind some of the choices made while coding the bot. If you want to see gifs of the helper bot working or if you care more about just what the helper bot offers for the end user then go to [this page](https://michael-perdue.github.io/posts/My-Discord-Bots-Functions/). This page won't cover all the functionality as some of the commands are self-explanatory in how they work and are coded. [Click here for the GitHub repo for this project](https://github.com/Michael-Perdue/Discord-Helper-Bot)
 
 ## How to setup a basic discord bot 
 
@@ -20,7 +20,7 @@ Below is a diagram of what happens on the launch of my helper bot. You can ignor
 
 To set up the bot to work you need to create a sub-class of Discord's preexisting [bot class](https://discordpy.readthedocs.io/en/stable/ext/commands/commands.html) and then setup in the init what intents (what you want the bot to do), command prefix (what you want commands to use - not important if you end up using slash/hybrid commands) and what cogs the bot will use. Then all you need to do is make an instance of your new bot and call the run function on it in a while loop to ensure the bot keeps running.
 
-Below is code from my bot with some complexities removed to show the bare bones of what is needed for the bot to function (init, setup_hook etc) and what are functions of the bot you can use:
+Below is code from my helper bot with some complexities removed to show the bare bones of what is needed for the bot to function (init, setup_hook etc) and what are functions of the bot you can use:
 
 ```python
 import discord
@@ -106,7 +106,7 @@ if __name__ == '__main__':
 
 The diagram above helps show just how the helper bot is structured and one of the key design features that is shown is the use of *cogs*. So *cogs* in Discord's API are how you can design an extremely scalable and object-oriented bot. The cogs are classes that inherit the preexisting discord [*Cog* class](https://discordpy.readthedocs.io/en/latest/ext/commands/cogs.html) and then you just add commands which you want that cog to provide. So this means that you can make as many cogs as you want, to provide whatever functionality you want and this allows you to break up your code into nice neat object-oriented cogs to ensure that your code doesn't end up as just one long cog with over 1k lines of code. **For the cog to be loaded by the bot you just have to get the bot to load the cog in setup hook** as anywhere else can lead to the commands not being loaded properly. Each command you make must be an async function as the discord bots only work when they are asynchronous meaning the task being executed can be switched to another task at almost any point. 
 
-Here is an example code of Cog file:  
+Here is an example code from one of my Cog files:  
 ```python 
 from discord.ext import commands
 
@@ -147,7 +147,7 @@ Below is an example of how my bots slash commands look like:
 
 There are around 5 different ways in which you can implement slash commands, the way that this page implements it is through hybrid commands. The reason to use hybrid commands as the way to implement it is that it lets you keep using cogs and the code change in the cogs is very minimal compared to the other ways which require any code you previously wrote to be completely changed. Another nice feature of a hybrid command is that the command can be used with command prefix like "!" and a slash so doing */roll* and *!roll* performs the same command, this is nice as it means during testing if you have issues with syncing the slash command you can still test the command just without the slash.
 
-To implement hybrid commands you must specify every argument type otherwise it will not work and the command won't pop up as an option. Below is a snippet of code from my bot showing an example of a hybrid command within a Cog:
+To implement hybrid commands you must specify every argument type otherwise it will not work and the command won't pop up as an option. Below is a snippet of code from my helper bot showing an example of a hybrid command within a Cog:
 
 ```python 
 from discord.ext import commands
@@ -321,6 +321,55 @@ async def on_message(self, message: Message):
 ```
 ### Adding and removing words from the banned word list
 
-When adding and removing a word from the list through the two commands */banword* and */unbanword* it not only adds/removes it from the text file but also from the bot's banned words list so the effect is instant.
+When adding and removing a word from the list through the two commands */banword* and */unbanword* it not only adds/removes it from the text file but also from the bot's banned words list so the effect is instant. You must be an administrator to use either command to ensure that not just anyone can ban or unban words. Below you can see the code of how the helper bot unbans and bans words:
 
+```python
+    @commands.has_permissions(administrator=True)
+    @commands.hybrid_command(name="banword",description="Bans a word, so makes it so any new message with that word gets deleted and reported to mod channel")
+    async def ban_word(self,ctx: commands.Context,word: str) -> None:
+        """
+        :param ctx: the context of the message
+        :param word: the word you want banned
+        """
+        # Gets a list of lines from the txt file
+        lines = open("banned_words.txt", "r").readlines() 
+        # Finds the line with the id the same as the server the message is from and adds the word
+        lines = [str(line.replace("\n","") + " " + word + "\n") if str(ctx.guild.id) in line else line for line in lines]
+        log_message(ctx,"ban word command:\n   word banned: "+word+"\n")
+        # Writes the lines with the adjusted line back to the banned_words txt file
+        file = open("banned_words.txt","w")
+        file.writelines(lines)
+        file.close()
+        # Adds the word to the banned_words dictionary with the key being the servers id
+        self.bot.banned_words[ctx.guild.id] = (self.bot.banned_words[ctx.guild.id] + [word])
+        # Replies to command with a message that only you can see and sends a log to the mod channel
+        await ctx.send("\'" + word + "\' Has now been banned",ephemeral=True)
+        await self.moderation_channel(ctx).send(ctx.message.author.mention + " has banned the word: " + word)
 
+    @commands.has_permissions(administrator=True)
+    @commands.hybrid_command(name="unbanword",description="Unbans a word which was previously banned")
+    async def unban_word(self,ctx: commands.Context,word: str) -> None:
+        """
+        :param ctx: the context of the message
+        :param word: the word you want unbanned
+        """
+        # Gets a list of lines from the txt file
+        lines = open("banned_words.txt", "r").readlines()
+        # Finds the line with the id the same as the server the message is from and removes the word along with any extra whitespace
+        lines = [(str(ctx.guild.id) + " " + str(re.sub(("(^|\s)"+word+"($|\s)"),"",line.partition(" ")[2])))if str(ctx.guild.id) in line else line for line in lines]
+        log_message(ctx,"unban word command:\n   word unbanned: "+word+"\n")
+        # Writes the lines with the adjusted line back to the banned_words txt file
+        file = open("banned_words.txt","w")
+        file.writelines(lines)
+        file.close()
+        # Removes the word to the banned_words dictionary with the key being the servers id
+        self.bot.banned_words[ctx.guild.id] = [word1 for word1 in self.bot.banned_words[ctx.guild.id] if word1 != word]
+        # Replies to command with a message that only you can see and sends a log to the mod channel
+        await ctx.send("\'" + word + "\' Has now been unbanned",ephemeral=True)
+        await self.moderation_channel(ctx).send(ctx.message.author.mention + " has unbanned the word: " + word)
+
+```
+
+## How mass deleting messages works
+
+## Other design notes 
