@@ -2,7 +2,7 @@
 title: Generating Graphs From CSV Files With JavaFX
 date: 2023-08-10 
 categories: [Additional Projects, Generating Graphs From CSV Files With JavaFX]
-tags: [java]     # TAG names should always be lowercase
+tags: [java, javafx, csv, graphing]     # TAG names should always be lowercase
 ---
 
 # TLDR of the project
@@ -15,7 +15,7 @@ Below is a gif of the whole system working:
 
 # System Features
 
-## Overall system structure
+## System structure
 
 Below is a class diagram of the classes in the program:
 
@@ -107,3 +107,23 @@ Here is a demo of all the tooltips on the various graphs:
 
 ## Saving graphs to png
 
+All 6 of the different graphs can be exported and saved to a png image with the click of a button. The code for achieving this is very simple in JavaFX as most components have a snapshot feature that gives a writeable image and then I turn that writeable image into a buffered image through SwingFXUtils and then this buffered image is written to a file with ImageIO. Every image that the user saves is stored in the downloads folder with the file name of the chart title.
+
+The code for this is:
+
+```java
+    protected void savePNG(){
+        // Gets a snapshot of the chart
+        WritableImage image = chart.snapshot(null,null);
+        // Creates an empty file for the image in downloads
+        File imageFile = new File(System.getProperty("user.home") +"/Downloads/" + chart.getTitle() + ".png");
+        try{
+            // Writes the image into the empty image file in downloads
+            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", imageFile);
+        }catch (Exception e){e.printStackTrace();}
+    }
+```
+
+An example of the resulting image that is stored in the downloads folder is below: 
+
+![](https://michael-perdue.github.io/assets/graphing-examplepng.png)
