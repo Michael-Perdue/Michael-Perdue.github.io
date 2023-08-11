@@ -81,5 +81,29 @@ Here is a demo of all the tooltips on the various graphs:
 
 ## Examples of each 6 types of graphs
 
+### Line chart
+
+![](https://michael-perdue.github.io/assets/graphing-linechart.png)
+
+### Bar chart
+
+![](https://michael-perdue.github.io/assets/graphing-barchart.png)
+
+### Stacked bar chart
+
+![](https://michael-perdue.github.io/assets/graphing-stackedbarchart.png)
+
+### Scatter chart
+
+![](https://michael-perdue.github.io/assets/graphing-scatterchart.png)
+
+### Area chart
+
+![](https://michael-perdue.github.io/assets/graphing-areachart.png)
+
+### Stacked Area chart
+
+![](https://michael-perdue.github.io/assets/graphing-stackedareachart.png)
+
 ## Saving graphs to png
 
