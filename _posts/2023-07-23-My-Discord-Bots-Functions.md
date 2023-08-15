@@ -18,6 +18,8 @@ So this page covers all the functionality of the bot without getting bogged down
 
 # Helper bot Functions and commands
 
+This bot runs 24/7 on a VPS and you can add it to your server by clicking [Here](https://discord.com/api/oauth2/authorize?client_id=1132368957857337554&permissions=8&scope=applications.commands%20bot) which gives it permissions to act as an administrator and create application commands (/commands). 
+
 ## Moderation functions and commands
 
 Upon someone adding the helper bot to a server, it will make a moderation channel which will provide the basis for where all logs and moderation-based notices go. This is automatically made, rather than just relying on a user making the channel for simplicity purposes. 
