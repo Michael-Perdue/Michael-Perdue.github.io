@@ -3,9 +3,6 @@ title: Generating Graphs From CSV Files With JavaFX
 date: 2023-08-10 
 categories: [Additional Projects, Generating Graphs From CSV Files With JavaFX]
 tags: [java, javafx, csv, graphing]     # TAG names should always be lowercase
-image:
-  path: /assets/graphing-stackedbarchart.png
-  alt: Stacked bar chart page
 ---
 
 # TLDR of the project
