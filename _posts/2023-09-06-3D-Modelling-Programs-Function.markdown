@@ -25,15 +25,27 @@ Below is a video of the whole system working and systematically showing each fea
 
 ### Selecting shapes 
 
+![](/assets/3D-Selecting.gif)
+
 ### Rotating shapes
+
+![](/assets/3D-Rotate.gif)
 
 ### Translating/Moving shapes
 
+![](/assets/3D-Translating.gif)
+
 ### Configuring shapes
+
+![](/assets/3D-Configure.gif)
 
 ### Duplicating shapes
 
+![](/assets/3D-Duplicating.gif)
+
 ### Deleting shapes
+
+![](/assets/3D-Deleting.gif)
 
 ## Creating shapes 
 
