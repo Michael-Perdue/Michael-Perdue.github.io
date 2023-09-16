@@ -6,53 +6,117 @@ tags: [java, c++, python, flask, grafana, influx, sql, microbits, rest api]  # T
 pin: true
 ---
 
-This project was completed in a group of 3 people with a rotating scrum master between each 3 of us and my role was everything except front end (I made the graphing page for the front end but that was just embedding grafana through an iFrame) and work too much on the microbits embedded side of things this time unlike the [previous project (Smart Lab)](https://michael-perdue.github.io/posts/Smart-Lab/) that I did work on the microbits extensively and this projects extends that previous project. So I was focused on the Base Station, API, InfluxDB, MySQL DB and grafana for this project.
+# Project Overview
 
-# TLDR of the project
+The Smart Environment Toolkit is an extension of the Smart Lab project, taking the concept of a smart IoT lab with microbits and expanding it to a comprehensive environment spanning multiple buildings and rooms, all configurable by the user. It provides a web interface accessible from anywhere, offering real-time statistics for buildings and rooms (e.g., the number of people, temperature, noise level, and light level). Users can also remotely control room lighting. Microbits are used to record data and communicate within a mesh network. The collected data is processed and stored in InfluxDB, and the website retrieves information from an API written in Python.
 
-This project is an extension of the [Smart Lab](https://michael-perdue.github.io/posts/Smart-Lab/) project I made and takes the idea of a smart lab IOT with microbits and brings it to a whole environment spanning multiple buildings and rooms all configurable by the user (ie amount of buildings, areas, rooms etc). It provides a website that can be accessed anywhere that provides real time statics of the building (amount of people in each building and room, the temperature, noise level and light level) and also management of the rooms light remotely (turn on and off from anywhere with internet). This is done through microbits being coded to record this information and communicates as a mesh network with one microbit per room writing over serial to a computer which processes it in java and sends it to a api written in python on a vps where it is then stored in an influx db and the website then calls the api to get the information. Then the capacity of the people is done through users carrying microbits which communicate with the sensors every 10 seconds saying that they are there and these users can also unlock doors through their microbits. You can easily design the system to work for any real world scenario as the creation of buildings/rooms/floors etc and the mapping of microbits can be all done through the website. Each microbit can be configured to work as any role from the website so you can set a microbit to be a sensor then remove it and set it to be a light. The deletion of a building will then remove any roles of the microbits in that building to allow for easy setting up of the system again and again.
-
-The system is thoughrouly tested through unit tests, user testing, end to end testing, integration testing and testing of the system to ensure it can run 24/7. Sadly microbits are quite limiting especially for a system like this so they don't always perform perfectly so during our test their would ocasionaly be lost data for a minute or so along with some other minor bugs however that is due to the limitation of microbits hardware and the [codal library](https://github.com/lancaster-university/codal-microbit-v2) they run on which we had to edit a decent amount to allow for this system to work. Below you can read an indepth dive of the system including class diagrams, screenshots, clips of the IOT system running, code snippets and more. 
+This project was completed in a group of 3 people, with my primary role encompassing mainly backend but I did also make the graphing webpage and in my previous project, [Smart Lab](https://michael-perdue.github.io/posts/Smart-Lab/) I extensively worked with microbits however there wasn't a need for that this time. So My focus for this project was on the Base Station, API, InfluxDB, MySQL DB, Grafana and graphing page for the website.
 
 
-# The structure of the backend of the system
+## Project Features
 
-Here is a diagram of our backend structure:
+**Real-time Environmental Data and Location Tracking**
+- Temperature, light, and noise levels are continuously recorded by microbit sensors.
+- Users can track the number of people in each zone, area, and room in real time.
+- Location tracking is facilitated by walkers carrying microbits, which periodically report their location to sensors.   
+
+**Light Actuation**    
+- Users can remotely control room lighting via the web interface.    
+
+**Door Unlocking and Locking**    
+- Microbits can be assigned the role of a door, allowing users to unlock and lock doors remotely.    
+
+**Graphs of Live and Historic Data**     
+- The system allows users to analyze historical environmental data through graphs and charts, providing insights into trends and patterns.
+
+**System Structure**    
+- The system's structure is highly flexible and user-configurable.
+- Zones, areas, and microbits can be easily added, removed, or reconfigured via the web interface.
+
+**Role-Based Access Control and User Managment**
+- Two user levels exist: User and Admin. Admins can promote users, delete accounts, and configure the system.
+- The system can enforce role-based access control, ensuring that users can only access features and data relevant to their assigned roles.
+
+## Structure of the system
+
+### Architecture diagram of system
 
 ![](https://michael-perdue.github.io/assets/ToolkitDiagram.jpg)
 
-After the first project the [Smart Lab](https://michael-perdue.github.io/posts/Smart-Lab/) we already had a extensive idea on the limitation of a microbit and how to best utilise the radio of the microbits. So the microbits communicate with each other over radio on a specified band and radio group then the all the sensor microbits will find the closest basecamp microbit and this basecamp then sends this data over serail to the base station. The base station (a java progrma continually running on the pc) then processes this data, filters our junk messages and sends the data to the API through the appropriate routes. The REST API (written in python) will then process this data and if its specific data points it will send it to influxDB (which is what influx was built to store) through flux statements and if it is anything relating to roles of the microbits then it will be stored into the MySQL DB. Grafana also uses influxDB and using flux statements combines the MySQL data which was a much nicer way of dealing with both DB's then using Grafana's built in functions which don't particularly work. The api and website both auto deploy through a docker container on the VPS which lets us easily update the live API and Website with just a click of a button. The front end website then gets various sets of data, graphs etc all through the API routes and it can manage the microbits and the whole system through these different routes. The website lets you add and remove users, set roles, change the microbits roles, change the structure of the environment.
+### Architecture summary
 
-This brings me onto the logical structure of the system which can be seen in this diagram below:
+- Microbits communicate via radio on specific bands and groups.
+- Sensor microbits locate the nearest basecamp microbit, which transmits the data to the base station via serial communication.
+- The base station, a continually running Java program on the PC, processes and filters the data, then sends it to the API through relevant routes.
+- The REST API, written in Python, processes data points by sending them to InfluxDB using Flux statements, while data related to microbit roles is stored in MySQL DB.
+- Grafana combines data from InfluxDB and MySQL using Flux statements, providing a more efficient solution than Grafana's built-in functions.
+- The API and website auto-deploy through a Docker container on the VPS, allowing easy updates with a simple click.
+- The front-end website accesses various data and graphs through API routes, offering control over microbits and system configuration, including user management, role assignments, and structural changes.
+
+### Logical structure diagram
 
 ![](https://michael-perdue.github.io/assets/SET-structure.png)
 
-This structure allows for the smart environment to work for any environment as the end user can define what a zone is, how many zones they have and how many areas each zone has. This system also supports as many walkers, doors and sensor microbits the only requirement for rooms is that there is atleast one basecamp in any room you have a sensor for. However if you don't need to have a sensor in the room then a room can exist without any basecamps thus a room can exist without any microbits. This is all then managable from the front end so you can delete,add and change rooms, areas and zones. In addition you can also assign,unassign and change the role (so sensor to door to walker etc) of all microbits.
+### Logical structure reasoning
+
+- The system is highly adaptable, allowing users to define zones, the number of zones, and the number of areas within each zone.
+- It accommodates an unlimited number of walkers, doors, and sensor microbits, with the only requirement being at least one basecamp in rooms with sensors.
+- Rooms can exist without basecamps, and in some cases, without microbits, offering flexibility.
+- All management functions, such as adding, deleting, and modifying rooms, areas, and zones, as well as assigning, unassigning, and changing microbit roles, are accessible from the user-friendly front end.
 
 ## Microbits
-The code for the microbits is written in C++ and is written using the [codal library](https://github.com/lancaster-university/codal-microbit-v2) and this works by first writing the code in C++ then compiling that code to hex through codal and then flashing that hex onto the microbits 
 
-So our setup is similar to last time however due to a better knowledge of the microbit radio we no longer had to use atomic multicast like we did on the previous project which in turn decreased the amount of processing and lost packets of the microbits. The walker microbit is used for opening doors and as basically a location/room current capacity tracker and it itself does not need to communicate with the basecamp. When the walker wants to open the door the door will contact the base camp and the base camp will write over serial to the base station the packet and the base sation will turn it into API request which will return the results of if it can open the door and that packet will be sent do the door. The walker then also send a message to the nearest sensor saying that it is still alive every 10 seconds so that the sensor can then forward on the information and keep live tracking of its location. In addition the sensor will also send the temperature, noise and light reading every 3 seconds. 
+The code for the microbits is written in C++ and uses the [codal library](https://github.com/lancaster-university/codal-microbit-v2). Microbits communicate with each other via radio, with sensors reporting data to a basecamp microbit, which then sends it to the Base Station on a PC.
 
-The microbits when turned on use a simple dhcp which is that they will send a request to the basecamp for its ID and role, this is then written over serial and a request to the API is made which looks up a MySQL table that has all the serial ids of microbits along with a user friendly ID (starts at 1 and increments after each new microbit) and the role, this is then returned over serial and a packet is sent. The microbit will then flash If the microbit has no role then it will send a keep alive request every 30 seconds and when that request comes in it will check if a new role has been given. You then know what microbit is giving what data as they send along a little bit of meta data saying the size of the packet, the message id, the packet id, the microbit id then the data. The message id would then be used for making sure messages are only proccessed once by as they are a randomly generated 32 uint number.
+### Key features:
+
+- Our setup has evolved since the previous project, eliminating the need for atomic multicast, resulting in improved efficiency with microbits.
+- The walker microbit now serves as a door opener and a real-time location and room capacity tracker, no longer requiring direct communication with the basecamp.
+- When a walker attempts to open a door, the door contacts the base camp, which relays the request to the base station via serial communication.
+- The base station converts the door request into an API request to determine if the door can be opened, and the result is sent back to the door.
+- Simultaneously, the walker microbit sends "alive" messages to the nearest sensor every 10 seconds, facilitating live tracking.
+- Sensors also transmit temperature, noise, and light readings every 3 seconds.
+- Upon powering on, microbits use a simple DHCP approach, requesting their ID and role from the basecamp.
+- The basecamp queries a MySQL table containing microbit serial IDs, user-friendly IDs (starting at 1 and incrementing), and roles via an API request.
+- Microbits flash their roles, and if no role is assigned, they send a keep-alive request every 30 seconds.
+- Metadata is included in microbit transmissions, specifying the packet's size, message ID, packet ID, microbit ID, and data.
+- Message IDs ensure that messages are processed only once, as they are randomly generated 32-bit unsigned integers.
 
 ## Base Station
-The Base Station is effectively responsible for the turning bytes sent from a microbit serially into the correct data and then calling the relevant API routes to ensure that the data is handled correctly and stored if needed. The code itself is written in java and is event driven following the [observer design pattern](https://refactoring.guru/design-patterns/observer) which is shown in the class diagram below where the serial manager class will read packets and report them to the packet manager and then this packet manager will loop through all listeners and report to them if they are subscribed to that packet type that one has appeared, the listeners on creation need to register themselves as a listener by calling the method in the packet manger class. 
 
-Then the listeners all have a set way they deal with each event/packet they are registered to listen to, so for data related packets report listener will call the rest api manager with the packet type and the packet which the api manager will subsequently compile a correct url to call on the api to store that data. The door listener is used for packets to check if a microbit can open a door or not through the api manager and it will then construct a packet to send back over through the serial manager stating whether the door can be opened or not. The address listener is for assigning the microbits ids whenever they turn on so it will send a request through the api asking whether the serial id (uint32) of the microbit has an assigned easy to read id(starts at 1) and the api will return one and if one didnt exist it will make a new one by the incrementing the current highest id number. The light actuation listener does the same as the door listener but just gets back its status. Then the listeners that need to send a packet will do so via sending the packet to the serial manager and this will then write it over serial.
+The Base Station, written in Java, is responsible for processing data from microbits, filtering out junk messages, and forwarding the data to the API. It uses the observer design pattern to handle events.
 
-The base station also performs additional checks to ensure no garbage/corrupted data is processed and this is done by checking the size of the packets ensuring that not only it is big enough to process but once it is being processed by the serial manager it checks that for its packet type it is the correct size and if its not then 4 bytes are cleared from the buffer and the next 4 bytes are read from buffer until a non corrupted packet is found. This is done on top of the microbits checking for duplicate packets based of ID's so in total the system deals with corruption of data and duplication of data.
+### Key features:    
+- The Base Station, written in Java, processes data from microbits, invoking relevant API routes for data handling and storage.
+- It follows the observer design pattern, with a serial manager reading packets and reporting them to the packet manager.
+- The packet manager notifies registered listeners about specific packet types, and listeners execute predefined actions accordingly.
+- The report listener communicates with the REST API manager to store data, the door listener checks if a microbit can open a door, the address listener assigns microbit IDs, and the light actuation listener retrieves light status.
+- Listeners that need to send packets do so via the serial manager, which writes them over serial.
+- The Base Station includes checks to prevent data corruption, verifying packet size during processing and discarding incomplete or corrupted packets.
+- Microbits also handle duplicate packets based on IDs to ensure data integrity.
+- Unit tests using JUnit cover packet parsing and URL route creation.
+- The Base Station offers a debug mode for diagnostics, providing insights into packet processing and route usage.
 
-When it comes to testing of the base station along side integration testing and end to end testing I have made multiple unit tests using Junit and it tests parsing of each packet type, alongside the creation of the url routes for the api. In addition the base stations has a debug mode in which toggling a boolean flag allows you to easily see all information about the packets being proccesed, routes being used and any other imporant diagnositc information.
-
-Rather then including code snippets of the java code I have instead made a class diagram as unlike with the API you won't be able to make sense of any of the code just from snippets. Below is a class diagram of the base station, note doted line means it iteracts/uses that classes methods or properties, the blue line dictates classs inheritance, the green line is when a class is implementing a intergace and a white solid line is when a class must contain a specific amount of instances of another class:
+### Base Station Class Diagram
+I've created a class diagram for the Base Station instead of including code snippets, as code snippets alone might not provide sufficient context. The class diagram illustrates interactions between classes, with dotted lines indicating usage, blue lines representing class inheritance, green lines showing class implementation of interfaces, and white solid lines indicating class composition:
 
 ![](https://michael-perdue.github.io/assets/ToolKitClass.png)
 
+
+## Database
+
+The project employs two databases: InfluxDB for storing data points and MySQL for storing user details and system structure. InfluxDB is used for its efficient time-series data storage, while MySQL manages user accounts and logical structure.
+
 ## API
-The API for this project was a REST API written in python by using [Flask](https://flask.palletsprojects.com/en/2.3.x/). It has around 50 routes most of which can be further expanded on by adding arguements so for example the route for a single reading of data lets you specify the micrbit you want, the offset (i.e. last data point or 2nd last data point etc) and the type (temperature, noise or light level). Then to get specific data was fine as I just had a flux query to get the data for microbit ID x, however it did mean that I had to learn flux which was quite a task in comparision to sql as influx/flux returns multiple tables rather then just one nice combined table like SQL and below you can see an example of a flux statement.
+
+The REST API, written in Python using Flask, has around 50 routes, allowing users to retrieve various data points, configure microbits, and manage the system. It interacts with InfluxDB and MySQL for data storage.
+
+To get specific datat points it is in the influx databas so I just had a flux query to get the data for microbit ID x, however it did mean that I had to learn flux which was quite a task in comparision to sql as influx/flux returns multiple tables rather then just one nice combined table like SQL and below you can see an example of a flux statement.
+
+<br>
 
 Example of a flux statement and the code in python to get the last record from x microbit with x offset:
+
 ```python
     #Gets the last record from the table given with the microbit and the offset of the result (i.e if you want the 2nd last result)
     queryResult = query_api.query('from(bucket: "scc331") ' 
@@ -70,7 +134,12 @@ Example of a flux statement and the code in python to get the last record from x
     return records
 ```
 
-When it came to getting aggregated results so for example how many people are in x building then I would first use a SQL statment for the MySQL table (two seperate dbs as Influx is built for just data points) and get the microbit id's for all the zones and areas in the building and then I would get the last known location of all the microbits through flux and count all the walkers with the location the same as any of the zones or areas. Then for just any other routes that would just need to check the MySQL tables then I just have a simple SQL statment to check it and the way that I coded this in python can be seen below with the example of changing a microbits role and was done by using the [mysql connector library](https://www.mysql.com/products/connector/) for python:
+<br>
+
+For aggregated results, like counting people in a specific building, I retrieved microbit IDs for zones and areas from the MySQL table. Then, I obtained the latest locations of all microbits via InfluxDB and counted walkers in zones or areas. Connection to mysql is done through using the [mysql connector library](https://www.mysql.com/products/connector/).
+
+<br>
+Example of code for changing a microbit's role, in Python:
 
 ```python
 db = mysql.connector.pooling.MySQLConnectionPool(host=mysql_address, user=mysql_user, password=mysql_password, database="SCC331", autocommit=True, pool_reset_session=True, pool_size=5)
@@ -96,8 +165,9 @@ def changeMicrobit(microbitID,type):
     except:
        return False
 ```
+<br>
 
-Finally the API itself has authentication through flasks session so a user first must call a login a route with a username and password, this is password is then hashed with bcrypt (what we use to store hashed passwords) and checked if it matches the hash in the dabase and if so that route then returns a cookie that is sent along with each request that states their authentication level and every route has a required auth level the user must be to access it. This means if the user tries to skip a the login page they just get a 404 error rather then any data and this is achieved with the code below:
+The API uses Flask sessions for authentication. To log in, a user must access a login route with a username and password. The password is hashed using bcrypt (for secure storage) and checked against the database hash. If the check succeeds, the route sends a cookie with the user's authentication level for subsequent requests. Every route specifies a required authentication level. Attempting to bypass the login page results in a 404 error implemented as follows:
 
 ```python
 #Login route takes a username and password
@@ -135,13 +205,11 @@ def authenticated(requiredRole):
 @authenticated(Role.Admin)
 def findAddress():
 ```
-Finally when it comes to testing of the API along side integration testing and end to end testing I have also unit tested the API to ensure logging in is persistant, routes work and return the correct information and other things. This was achieved through using the unittest library.
+Regarding API testing, I performed unit tests using the unittest library to verify persistent login, route functionality, and data accuracy, in addition to integration and end-to-end testing.
 
-## Database
 
-The project uses two databases a Influx database and a MySQL database. The Influx db is used to store data points so it stores the date time, microbit ID, type of data and value of a data point. This then also can be easily mapped onto a graph using grafana and setting up a date/time line graph which made making the graphs nicer then just using MySQL. MySQL is used for storing the users details (passwords and usernames) and the overall logical structure of the system so the buildings,areas,zones etc along with the microbit information of what each microbit's role and ID is.
 
-# The systems features
+# Demo and Costs
 
 ## Demo of overall system
 
@@ -149,17 +217,17 @@ Here is a video of the website working from a phone:
 
 {% include embed/youtube.html id='edvk2hz0MMY' %}
 
-Here is how the system looks from the hardware sides of things:
+## Demo of the hardware sides of things:
+
+In the demo below, you can observe the system in action, with each cluster representing a room and its associated microbits (please note that it has been tested in larger environments beyond what's shown). The computer, equipped with a base camp microbit, flashes "B" upon message processing. The computer's console window displays logs from the basestation such as messages processed per second, microbits connecting and disconnecting, and any errors. Lastly, the computer showcases the homepage dashboard of the website, featuring live data.
 
 ![](https://michael-perdue.github.io/assets/AllToolkit.gif)
 
-In the demo above you can see the system in practive where each of the clusters are a room and its microbits asocciated with that room (note in practice and it has been tested in much bigger environments but for the sake of recording that is not possible to show). The computer then which has a base camp microbit attached to it and then this bace camp continually flashes B to let you know it has just processed some messages. Then on the actual computer proccessing the messages you can see it has a console window which is prints the amount of messages proccessed a second, the microbits that are connecting and disconnecting to this basecamp and any errors. Finally the computer shows the of the homepage dashboard of the website with live data.
-
 ## Realtime environmental data (including location tracking)
 
-Each microbit sensors records the temperature, light and noise level through the built in hardware of a microbit. The temperature value is measured in celcius, however both light and noise are measured from an arbiturary value so light is just on a scale of 0 to 255 and noise is just a reading in the 9000s so we coverted these to be thresholds meaning if its below x then display that its 'quiet' or for lights its 'dark'. Then each of these are displayed on the website home page under the zone, area and room the sensor is located in.
+Each microbit sensor records temperature, light, and noise levels. Temperature is measured in Celsius, while light and noise are on scales of 0 to 255 and readings in the 9000s, respectively. We converted these values into thresholds, categorizing them as 'quiet' for noise levels below a certain value and 'dark' for low light levels. This data is displayed on the website's homepage, categorized by zone, area, and room.
 
-Finally the other evnrionmental data that we took the capacity of each zone, and this was effectively just the amount of people with microbits in each zone. This worked off each walker sending out pings to other sensors to find the closest microbit then this location would be reported back every 10 seconds and this is then be stored and the api only returns the capacity from records in the last 5 mins to ensure non-active microbits which could have left the zone and are no longer near any zones aren't still being recorded. No walker is ever counted more then once as it goes of its id and finds the last record and only the last one.
+Additionally, the system tracks the capacity of each zone, representing the number of people with microbits in each zone. Walkers periodically send signals to nearby sensors to determine their location, which is reported back every 10 seconds and stored. The API retrieves capacity data from the last 5 minutes to ensure accurate tracking and prevent inactive microbits from being counted. Each walker is only counted once based on their unique ID and the last recorded location.
 
 Here you can see a video of the location tracking working looking on the left screen you will see the current capacity numbers change within 10 seconds of the microbit walker being moved and you can also see the live temp,noise and light level:
 
@@ -180,6 +248,10 @@ Here is a video of the a walker trying to open a door they dont have permission 
 
 ## Graphs of live and historic data
 
+Here is a short video showing the graphs with live and historic data:
+
+{% include embed/youtube.html id='ajzAyRZk2zI' %}
+
 
 ## System structure and user management 
 
@@ -189,7 +261,7 @@ Below I have included the design mockups of the system, (rather then just a mass
 
 ![](https://michael-perdue.github.io/assets/ToolKitPages.png)
 
-# Costings of the system
+## Costings of the system
 
 Here's an estimate of the costs associated with different system sizes:
 
