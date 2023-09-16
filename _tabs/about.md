@@ -3,59 +3,75 @@ icon: fas fa-info-circle
 order: 4
 ---
 
+![Michael Perdue](/assets/ProfilePicture.png)
+
 [Click here to download my CV!](/assets/Michael_Perdue_Resume.pdf)
 
-# Education 
-## MSci. Software Engineering with Industrial Experience (2020 – Present) Lancaster University
+## Introduction
 
-Scheduled to graduate with a First-Class MSci degree in July of 2024.   
+Hello, I'm Michael Perdue, a passionate and detail-oriented software engineer with a strong foundation in Java, Python, and SQL. I have a proven track record of delivering high-quality code and thrive in collaborative team environments. My dedication to creating innovative solutions and my commitment to maintaining coding standards make me a valuable asset in dynamic software development projects.
 
-#### Java projects     
-- Created a plagiarism checker in Java with Swing which can check one text document with any
-number of other given text documents.
-- Made a solar system model in Swing where you can add and remove planets and moons.
-- A recursive depth first search, shortest path maze solving algorithm.
-- I have made a passive replication system for an auction house using java RMI.  
+**Contact Information:**
+- **Email:** [michael0perdue@gmail.com](mailto:michael0perdue@gmail.com)
+- **Website:** [michael-perdue.github.io](https://michael-perdue.github.io)
+- **GitHub:** [github.com/Michael-Perdue](https://github.com/Michael-Perdue)
+- **LinkedIn:** [linkedin.com/in/michael-perdue](https://www.linkedin.com/in/michael-perdue)
 
-#### Python projects     
-- I have delved into computer networks in Python and made a raw implementation of ICMP Pings,
-Traceroutes (UDP and ICMP), Web server and proxy server.
-- Using the cryptography module, I programmed the Diffie-Hellman (DH) key exchange, symmetric and
-asymmetric encryption and hashing.   
+## Personal Statement
 
-#### C projects
-- In C I have created my own implementation of Malloc and Free which has helped me gain a broader
-knowledge of memory management.    
+I am a highly motivated individual with a friendly and approachable demeanor. My experiences, ranging from independent programming projects to collaborative work as a Scrum Master, have equipped me with not only technical skills but also strong time management and communication abilities. I am a critical thinker and highly adaptable when it comes to problem-solving, always eager to learn and grow in my field.
 
-#### Second year group project C#    
-- We created a top-down beat-em-up style game in C# based around the Lancaster University campus.
-- As part of the project, I created an A* pathing algorithm.
-- Group work taught me about using version control (pull requests, code reviews etc.) with GitHub, to
-efficiently work on a coding project in a group.   
+## Education
 
-#### Third year project - full stack development (C++, Java, Python rest API, SQL, HTML, JavaScript)
-- During my third year I have been working on the full stack of a group project involving Micro:bits and
-creating a live distributed system.
-- The system lets the user via our website configure a smart environment spanning multiple buildings,
-that reports the temperature, light, noise and location of people throughout the buildings, control
-the lights remotely and lets Micro:Bits act as an ID to open doors.
-- The system can work for any domain and is fully manageable from the front-end website which is
-hosted on a VPS.
-- I was involved in embedded coding of the Micro:bits in C++ which we setup to communicate via
-radio in mesh network and one Micro:bit serially writes the messages to a java program.
-- Another one of my roles was the java program which was designed in an observer pattern to process
-different serial packets, then calling the API to store it in the database and write responses to serial. I
-also created Twitter and Facebook bots which periodically sends out, posts regarding readings.
-- In earlier iterations I learned and used google protocol buffers to create and pass messages.
-- Created and managed a MySQL database and an Influx database.
-- In python I wrote a REST API using flask which has user verification and writes to a MySQL database
-using SQL statements and an influx database which was achieved through flux statements.
-- I created the graph page for the website by using the graphs from Grafana.
-- For testing purposes, I setup java and python unit tests, setup Grafana to view the live data in the
-influx database, performed extensive integration and user testing.
+- **MSci. Software Engineering with Industrial Experience**
+  - *Lancaster University*
+  - *October 2020 – July 2024*
+  - *Expected First-Class Honors*
 
+## Relevant Experience
 
-## A-levels, 2018 – 2020 Caroline Chisholm School
+### Summer Projects (May – September 2023)
 
-Cambridge Technical Introductory Diploma in IT (Distinction\*), Computing (A\*), Maths (A)
+- **Independent Programming Projects**
+  - *Dedicated time to expand technical skills and portfolio*
 
+- **Discord Helper Bot (Python)**
+  - *Developed a Python-based Discord bot with advanced message filtering and efficient hosting.*
+
+- **Graph Generator (JavaFX)**
+  - *Created a JavaFX program for customizable graph generation from CSV files.*
+
+- **3D Modelling Program (JavaFX)**
+  - *Designed a 3D modeling application with user-friendly interface and features.*
+
+- **'Random Website' Google Chrome Extension (JavaScript, CSS, HTML)**
+  - *Developed and published a Chrome extension for random website navigation.*
+
+### Portfolio Site (May – September 2022)
+
+- *Designed a comprehensive portfolio website using Jekyll and GitHub Pages, showcasing university and personal projects.*
+
+### Royal Society (June - November 2019)
+
+- *Collaborated on a Royal Society project using C# and Unity to educate young individuals about computer fundamentals.*
+
+- *Successfully presented the VR project to the Royal Society and engaged with a diverse audience, including industry experts.*
+
+## Skills
+
+- **Programming Languages:** Java, Python, C, C#
+- **Databases:** SQL, MySQL, InfluxDB
+- **Tools & Frameworks:** Flask, JavaFX, Docker, Grafana
+- **Version Control:** Git, GitHub
+- **Problem Solving:** Critical thinking, adaptability
+- **Teamwork:** Scrum Master, collaboration
+- **Communication:** Strong written and verbal skills
+- **Project Management:** Time management, organization
+
+## Personal Interests
+
+In addition to my technical pursuits, I have a range of personal interests that shape my character and contribute to my versatility:
+
+- **Sports:** I have been a competitive football player with Kislingbury, a local team, for 4 years. This experience has taught me the value of teamwork and discipline.
+
+- **Travel:** I am passionate about exploring new cultures and destinations.

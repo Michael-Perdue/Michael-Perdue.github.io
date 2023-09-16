@@ -191,35 +191,11 @@ Below I have included the design mockups of the system, (rather then just a mass
 
 # Costings of the system
 
-|               | Hardware               | Amount                       | Cost per hardware | Total cost    | Cost of whole organisation                                                                                                          |
-|---------------|------------------------|------------------------------|-------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------|
-| Small System  | Micro:bit              | 15                           | £15               | £225          | £447 initial and £120 upkeep per year                                                                                               |
-|               | Bat:bit3(battery pack) | 15                           | £9                | £135          |                                                                                                                                     |
-|               | Rechargeable Batteries | 30                           | £2                | £60           |                                                                                                                                     |
-|               | Base Station PC        | 1                            | £27               | £27           |                                                                                                                                     |
-|               | VPS                    | 1                            | £120 per year     | £120 per year |                                                                                                                                     |
-| Medium System | Microbit               | 50                           | £15               | £750          | £1,508 initial and £240 upkeep per year                                                                                             |
-|               | Bat:bit3(battery pack) | 50                           | £9                | £450          |                                                                                                                                     |
-|               | Rechargeable Batteries | 100                          | £2                | £200          |                                                                                                                                     |
-|               | Base Station PC        | 4                            | £27               | £108          |                                                                                                                                     |
-|               | VPS                    | 2                            | £120 per year     | £240 per year |                                                                                                                                     |
-| Large System  | Microbit               | 150                          | £15               | £2,250        | £3,516 initial and £600 upkeep per year                                                                                             |
-|               | Bat:bit3(battery pack) | 150                          | £9                | £450          |                                                                                                                                     |
-|               | Rechargeable Batteries | 300                          | £2                | £600          |                                                                                                                                     |
-|               | Base Station PC        | 4                            | £27               | £216          |                                                                                                                                     |
-|               | VPS                    | 4                            | £120 per year     | £600 per year |                                                                                                                                     |
-| Custom System | Microbit               | Mc                           | £15               | Mc*15         |                                                                                                                                     |
-|               | Bat:bit3(battery pack) | Bp = Amount of microbits     | £9                | Bp*9          |                                                                                                                                     |
-|               | Recargable Batteries   | Rb = Amount of microbits*2   | £2                | Rb*2          |                                                                                                                                     |
-|               | Base Station PC        | Bs = Amount of microbits/20  | £27               | Bs*27         |                                                                                                                                     |
-|               | VPS                    | VPS = Amount of microbits/40 | £120 per year     | VPS*120       |                                                                                                                                     |
-|               |                        |                              |                   |               | £29.25Mc = initial setup cost where Mc is total number of microbits as system = 15Mc + 9Bp + 2Rb + 27B which = 15Mc + 4Mc + 1.35Mc  |
-|               |                        |                              |                   |               | £3Mc as VPS is just microbit/40 *120 = upkeep per year where Mc is the amount of microbits in a system                              |
+Here's an estimate of the costs associated with different system sizes:
 
-## Total costings Hardware
-Small system = £447 initial hardware + £120 Vps upkeep per year 
-Medium system = £1,508 initial hardware + £240 Vps upkeep per year		
-Large system = £3,516 initial hardware + £600 Vps upkeep per year
-Custom system = £29.35 initial hardware per microbit + £3 Vps upkeep per year per microbit
+- Small System: £447 initial hardware cost + £120 VPS upkeep per year
+- Medium System: £1,508 initial hardware cost + £240 VPS upkeep per year
+- Large System: £3,516 initial hardware cost + £600 VPS upkeep per year
+- Custom System: Variable cost based on the number of microbits
 
-*Note this does not calculate/include the electricity cost as it fluctuates and due to limited testing we do not know how much would be consumed 
+Please note that these costs do not include electricity expenses.

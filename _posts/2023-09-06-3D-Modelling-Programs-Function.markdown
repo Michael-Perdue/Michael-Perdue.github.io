@@ -58,13 +58,19 @@ You must first click the button labeled *'move'* and then to move an object you 
 
 ### Configuring shapes
 
+To edit a shape via a configuration box over key press you must click the button labeled *'configure'*. Upon clicking the button all the selected shapes will be unselected as you can only configure one shape at a time and then when you click a shape a configuration box will appear. You can edit the rotation, position, dimensions, material and enable/disable the shape being a lightbox. Closing the configuration box will unselect the object.
+
 ![](/assets/3D-Configure.gif)
 
 ### Duplicating shapes
 
+To duplicate a shape or multiple shapes you must first select them and then click the button labeled *'duplicate'*. Upon clicking the button all the selected shapes will be unselected and a copy of that shape will be selected but that shape will be translated positively by one on the x-axis so it's clear that it's a new shape. This can be done infinitely and for as many selected objects as you want. Everything is copied when duplicating a shape including material and whether its a lightbox or not.
+
 ![](/assets/3D-Duplicating.gif)
 
 ### Deleting shapes
+
+To delete a shape or multiple shapes you must first select them and then click the button labeled *'delete'*. Upon clicking the button all the selected shapes will be unselected and deleted. The deletion also includes the light if the shape is a lightbox.
 
 ![](/assets/3D-Deleting.gif)
 
