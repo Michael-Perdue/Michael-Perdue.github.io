@@ -48,6 +48,4 @@ This program can be compiled and run using the following commands: `gcc *.c *.h 
 
 **Closing Thoughts:** 
 
-Developing the Memory Application was an intellectually stimulating project that I completed during my second year at university, within a one-week timeframe. It offered a valuable opportunity to apply my C programming skills to create a practical memory allocation tool.
-
-While this memory allocation implementation is functional for various use cases, I later expanded my knowledge in this domain by developing the A* pathfinding algorithm for the Campus Crawling Game, as described [here](https://michael-perdue.github.io/posts/campus-crawl-game-and-engine/#enemy-movement-and-a-pathing). 
+Developing the Memory Application was a very intellectually stimulating project that I completed during my second year at university. It allowed me to apply my C programming skills to create a practical memory allocation tool and taught me invaluable knowledge on how memory and pointers work.
