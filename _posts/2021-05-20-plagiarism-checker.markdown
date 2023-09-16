@@ -2,30 +2,31 @@
 title: Plagiarism Checker
 date: 2021-05-20 
 categories: [University Projects, 1st year]
-tags: [java]     # TAG names should always be lowercase
+tags: [java, swing]     # TAG names should always be lowercase
 ---
-For this project I used java and more specifically swing to provide a user interface. The plagiarism checker has 3 different functions Text window which highlights similar phrases, Word frequency window which lets you compare the word frequency of two files or see the occurence of a word in all files and finally the phrase frequency window this lets you set a minimum amount of words to be considered a phrase then see the files with the highest amount of copied phrases and you can compare one text file against every other text file. To add or remove a file all you have to do is add or remove the text file from the folder the code is located in.
 
-## Highlighting plagiarised text window
+**Project Overview:**
 
-This tab lets the user enter two text file names (must enter full name i.e. test1.txt) and a minimum number of words needed for a phrase to be considered a phrase (the min number must be between 1 and 99 (inclusive)). Then it displays both text files, one on each side and highlights both text where phrases are matched.
+For this project, I used **Java** with **Swing** to create a Plagiarism Checker. It's a handy tool with three key functions designed to make text analysis easy. It loads the text files from a specific folder making it so you could in theory compare infinite amount of files.
 
-Here is an example of it in action: 
+## Text Window: Highlight Similarities
 
-![](https://michael-perdue.github.io/assets/TextWindow.png)
+In the Text Window, you can compare two text files by entering their full names (like `test1.txt`). Just set a minimum word count for a phrase, and it shows both files side by side, highlighting where phrases match.
 
-## Word frequencey window
+![Text Window](https://michael-perdue.github.io/assets/TextWindow.png)
 
-This tab is split into two sides with different functionality. The left side of the tab lets the user enter two text file names to compare the use of words in the files, it will list in descending order of the words in the first file. The right side of the tab lets the user enter in a word to search for how many times it occurs in all the files then lists them in descending order.
+## Word Frequency Window: Explore/Find Word Usage
 
-Here is an example of it in action:
+The Word Frequency Window offers two useful features. On the left, enter two text file names to compare word usage. It lists words in descending order from the first file. On the right, input a word, and it shows how often it appears in all the files.
 
-![](https://michael-perdue.github.io/assets/WordWindow.png)
+![Word Frequency Window](https://michael-perdue.github.io/assets/WordWindow.png)
 
-## Overall percentage plagiarised window
+## Overall Percentage Plagiarised Window: Assess Plagiarism
 
-This tab is split into two sides with different functionailty. The left side of the tab lets the users enter a minimum number of words needed for a phrase to be considered a phrase. Then it displays the top 10 highest percentages of plagiarised files based on the amount of common phrases. The right side of the tab lets the users enter a minimum number of words needed for a phrase to be considered a phrase and a filename to check all the files against and to. Then it displays every file compared to the entered file in descending order, then a one line gap and then it displays the selected file compared to every file. 
+The Overall Percentage Plagiarised Window has more insights. On the left, set a minimum word count for phrases. It displays the top 10 files with the highest percentages of plagiarised content, based on shared phrases. On the right, specify a minimum word count and enter a filename for comparison. It generates a report, showing files in descending order and comparing the selected file to all others.
 
-Here is an example of it in action:
+![Overall Percentage Plagiarised Window](https://michael-perdue.github.io/assets/PercentageWindow.png)
 
-![](https://michael-perdue.github.io/assets/PercentageWindow.png)
+**Closing Thoughts:**
+
+This project not only demonstrates my early Java skills but also showcases my creation of user-friendly software. I developed it during my first year at university and shows my start in coding in Java and making graphical user interfaces.

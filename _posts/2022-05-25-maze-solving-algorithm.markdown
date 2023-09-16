@@ -2,15 +2,41 @@
 title: Maze Solving Algorithm
 date: 2021-11-7
 categories: [University Projects, 2nd year]
-tags: [java]     # TAG names should always be lowercase
+tags: [java, swing]     # TAG names should always be lowercase
 ---
 
+**Project Overview:** 
+
+I developed a **Java** Maze Solving Algorithm displayed visually in **Swing**. For this project I was provided with how to generate mazes through Lancaster University and then I was tasked with creating an depth-first search algorithm to find the shortest path from a starting point to an exit, highlighting the solution and letting the user continually select different routes.
+
 ## How the maze solving program works
-This program is made with swing Ui and generates a 20x20 grid of buttons each which have a random amount of walls around 500 by default. You can increase the amount of walls by adding an optional argument `java Driver <number>` where number refers to the amount of walls you want to add. You can then choose the starting point by left clicking a tile and then set the exit point by right clicking, upon a starting and end point being both set the shortest path will be generated and the path will be highlighted + the length of the path will be printed into the console. Then as soon as you want to make a new to find a new path just set the start and end point again and the previous highlighted path will be removed.
 
-## The recursive algorithm for solving the mazes quickest path
-The way in which the algorithm worked is a depth first search starting from the starting point it checks if it can go up then keeps going up until it cant so it checks right and repeats this process until it cant move at which point it will return to the previous call which was on the previous tile. Each time a tile is reached the length taken to get to that tile is stored so that when trying to go in a direction it will check if the current path length is smaller then the tiles smallest path which massively increases performance. This then deals with any looping as if the path tried to go to a tile it's been to then it will have a greater path then that tiles path so it wont be able to loop and get stuck. If no path is possible then it will print to the console that it is impossible to create a path. To see a more efficient path finding algorithm take a look at the A* pathing alorithm that I created for the Campus crawling game [click here](https://michael-perdue.github.io/posts/campus-crawl-game-and-engine/#enemy-movement-and-a-pathing)
+### Program Structure
+This program is built using Swing and generates a 20x20 grid of buttons, each containing a random number of walls (around 500 by default). You can increase the number of walls by adding an optional argument `java Driver <number>`, where `number` specifies the additional walls you want to add.
 
-Below is demo of the program working
+### Usage
+1. **Setting Start and End Points for initial path**: You can choose the starting point by left-clicking on a tile and set the exit point by right-clicking. Once both starting and ending points are set, the shortest path will be generated. The path will be highlighted, and its length will be displayed in the console.
+
+2. **Creating a New Path**: To find a new path, simply set the start and end points again, and the previous highlighted path will be removed.
+
+## The Recursive Algorithm
+
+### Algorithm Overview
+The algorithm employed is a depth-first pathing algorithm with elements inspired by *[Dijkstra's algorithm](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm)*, where it stores the previous quickest way to reach a node. It begins as a depth-first search from the starting point, checking each possible direction (up and right) until it cannot proceed further. If it reaches a dead end, it backtracks to the previous call made on the previous tile.
+
+### Optimizing Performance
+Each time a tile is reached, the program stores the length taken to reach that tile. When attempting to move in a direction, it checks if the current path length is shorter than the tile's smallest path, significantly enhancing performance. This logic also prevents the algorithm from getting stuck in loops.
+
+### Handling Unsolvable Mazes
+If no path is possible, the program will print to the console that it is impossible to create a path.
+
+### Visual Demonstration
+Below is a visual demonstration of the maze-solving program in action:
 
 ![](https://michael-perdue.github.io/assets/maze.gif)
+
+**Closing Thoughts:** 
+
+Developing the Maze Solving Algorithm was an engaging and rewarding project completed during my second year at university, under a tight one-week deadline. It provided an opportunity to apply my Java programming skills to create a practical tool for solving mazes.
+
+While this algorithm effectively finds the shortest path, I later expanded my pathfinding knowledge with the development of the A* pathing algorithm for the Campus Crawling Game, which you can explore [here](https://michael-perdue.github.io/posts/campus-crawl-game-and-engine/#enemy-movement-and-a-pathing).

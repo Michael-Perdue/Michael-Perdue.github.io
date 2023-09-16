@@ -5,25 +5,49 @@ categories: [University Projects, 2nd year]
 tags: [java]     # TAG names should always be lowercase
 ---
 
-Using Java I have created a solar system model where you can modify the system to remove planets, moons and astroid belts. You can also add new planets and moons with their own user defined distance from the sun, angle, size, speed, colour and if they orbit any planets
+**Project Overview:**
 
-## The base solar system
+I have developed a solar system model using Java that offers you the flexibility to manipulate the system by removing planets, moons, and asteroid belts. Moreover, you can introduce new planets and moons, each customizable with their user-defined attributes such as distance from the sun, angle, size, speed, color, and orbital relationships.
 
-The base solar system model is not 1 for 1 a replica of solar system but is roughly similar given that the difference between the biggest and smallest planet is 43x so for the sake of the model not being massive ive made the differences much smaller. The model includes all 8 planets and their major moons(no more then 5 moons per planet) it also includes saturns rings and the astroid belt that is between mars and jupitor that is randomly generated each launch so it never looks completely the same. The way that the system works is that it has all the space objects (planets, moons etc) in a arrayList that it continually loops through and calls move on each space object, upon move being called it will get its new location based of the speed and the angle of the object, it will then place/draw the object in reference to the object that it orbits as all space objects orbit something other that sun which just orbits 0,0. This is then drawn on the screen using Graphics2D (the univeristy of Lancaster provided this part of the code).
+### The Base Solar System
 
-The solar system can also be sped up or slowed down through the intial command line arguement (must be greater than 0) and you can also zoom into the solar system (must be greater than or equal to 1) through the initial command line arguement
+The base solar system model, while not a precise 1-to-1 replica of our solar system, closely resembles it. To maintain a manageable model size, I've scaled down the differences between the largest and smallest planets by a factor of 43. The model includes all eight planets along with their major moons (with a maximum of five moons per planet). Additionally, it incorporates Saturn's rings and the asteroid belt located between Mars and Jupiter. Remarkably, the asteroid belt is randomly generated with each launch, ensuring a unique appearance every time.
 
-`java Driver "speed" "zoom" `
+### System Mechanics
 
-Below is the program running with the command `java Driver 1 1`
+The simulation operates by managing all space objects, including planets and moons, within an ArrayList. It continuously iterates through these objects, invoking the "move" function on each. When "move" is called, a space object calculates its new location based on its speed and angle. Subsequently, it positions itself in reference to the object it orbits, as all space objects orbit something other than the sun, which orbits [0,0]. The rendering of this simulation is achieved using Graphics2D (provided by the University of Lancaster).
 
-![](https://michael-perdue.github.io/assets/SolarSystem.gif)
+You have the option to control the passage of time within the simulation. You can accelerate or decelerate the simulation via initial command-line arguments (speed > 0). Furthermore, you can zoom in on the solar system (zoom >= 1) using these command-line arguments:
 
+```bash
+java Driver "speed" "zoom"
+```
 
-## Adding and removing planets, moons and Asteriods
+### Visual Demonstration
 
-When it comes to removing and adding space object it is to as when the program is launched another window pops up with 7 text boxes where you just need to enter the name of the planet,moon or asteriod that you want to remove and click remove. It is important to note that upon removing a planet or any space object that has another object orbiting it, the objects that orbit the removed planet will also be removed. For adding planets or moons you need to enter the name, distance (from the object it orbits), size, speed, colour and the object that it orbits. These newly added planets and moons can be removed by entering the name and clicking remove.
+Below is a visual demonstration of the solar system simulation in action, using the command `java Driver 1 1`:
 
-Below is a demo of the adding and removing of planets and moons
+![Solar System Simulation](https://michael-perdue.github.io/assets/SolarSystem.gif)
 
-![](https://michael-perdue.github.io/assets/SolarSystem2.gif)
+## Customization
+
+The simulation allows for further customization by adding or removing celestial bodies.
+
+### Adding and Removing Celestial Bodies
+
+> Removing a space object removes all orbiting objects
+{: .prompt-info }
+
+To remove space objects, simply launch the program. Another window will appear with seven text boxes. You need to enter the name of the planet, moon, or asteroid you wish to remove and then click "remove." It's important to note that when removing a planet or any space object with other objects orbiting it, those orbiting objects will also be removed.
+
+To add planets or moons, provide details such as the name, distance from the object it orbits, size, speed, color, and the object it orbits. These newly added celestial bodies can be removed by entering their names and clicking "remove."
+
+### Visual Demonstration
+
+Here's a demonstration illustrating how you can add and remove planets and moons within the simulation:
+
+![Adding and Removing Celestial Bodies](https://michael-perdue.github.io/assets/SolarSystem2.gif)
+
+**Closing Thoughts:**
+
+This project reflects my early Java programming skills which has only been built upon and my ability to create interactive simulations.
