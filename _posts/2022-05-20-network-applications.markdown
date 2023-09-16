@@ -4,6 +4,9 @@ date: 2022-02-15
 categories: [University Projects, 2nd year]
 tags: [python]     # TAG names should always be lowercase
 ---
+
+**Project Overview:** 
+
 Using python sockets I have created a raw implemenation of Ping, Traceroute, Web server and a proxy server. These are all on the same python program and can be called using `python3 NetworkApplications.py <name of command> <base arguement if ping or traceroute> -<additional arguements>`.
 
 ## Ping
@@ -35,3 +38,7 @@ To run the program you enter the following command `python3 NetworkApplications.
 The fourth functionality that the program can offer is a web proxy server that can handle HTTP/1.1 GET requests. It works through the user sending a request to the server through a socket and then the server will try to get the address that the user wants to connect to and also checks if there is a specific port that the user wants to connect to. If it cannot connect within 5 seconds it will send back an error message otherwise it will forward on the users request to the web server they want to connect to and will send back all the messages that it recieves from the web server back to the client. By default the proxy server will be launched on the port 8000 but you can also configure what port it is on with `-p<port number>`.
 
 To run the program you enter the following command `python3 NetworkApplications.py proxy -p8000`
+
+**Closing Thoughts:** 
+
+Creating this versatile network application enhanced my Python skills and introduced me to networking concepts. The program's diverse functionalities, including Ping, Traceroute, Web server, and Proxy server, showcase my ability to tackle various network-related tasks.

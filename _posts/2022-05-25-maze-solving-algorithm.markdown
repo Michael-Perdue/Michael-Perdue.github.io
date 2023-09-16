@@ -2,7 +2,7 @@
 title: Maze Solving Algorithm
 date: 2021-11-7
 categories: [University Projects, 2nd year]
-tags: [java, swing]     # TAG names should always be lowercase
+tags: [java, swing, pathing, algorithms]     # TAG names should always be lowercase
 ---
 
 **Project Overview:** 
