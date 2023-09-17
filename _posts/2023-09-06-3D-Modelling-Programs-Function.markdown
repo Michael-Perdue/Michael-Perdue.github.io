@@ -6,18 +6,26 @@ tags: [java, javafx, csv, modelling]     # TAG names should always be lowercase
 pin: true
 ---
 
-# TLDR of the project
+**Project Overview:**
 
-This project was made to further my knowledge of JavaFX after the [graph generating program](https://michael-perdue.github.io/posts/Generating-Graphs-From-CSV-Files-With-JavaFX/) and this page covers the end-user functionality side of it. This program only uses JavaFX and no other external libraries. It is a 3D modelling program that lets you add cuboids and spheres to a blank screen and then you can translate, rotate, duplicate, set the material and more. The program works by having a bar of buttons that offer various functions from rotation, duplication, configuration and deletion of selected objects, creation of new 3D objects, setting the lighting and more. In addition, you can change the view of the model/objects by dragging with the mouse to rotate or pan the screen, changing zoom with the scroll wheel and you can move about, create and delete lightboxes to change the lighting. This is done by using [JavaFX's Shape3D](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/shape/Shape3D.html) which is pretty primitive for the purposes I wanted to use it for and mainly only provides a rendered 3D object, for more on how I adapted it and coded the program [click HERE](). If you want to see the source code then [the code for the project is located at the github repo here](https://github.com/Michael-Perdue/3D-Modelling).
+This project was designed to expand my knowledge of JavaFX following the [graph generating program](https://michael-perdue.github.io/posts/Generating-Graphs-From-CSV-Files-With-JavaFX/). This page covers the end-user functionality of a 3D modelling program developed using JavaFX without any external libraries. The program enables users to create, manipulate, and visualize 3D objects such as cuboids and spheres. 
+
+The program features a toolbar with various functions, including rotation, duplication, configuration, and deletion of selected objects, as well as creating new 3D objects and adjusting lighting. Users can interact with the 3D model by rotating, panning, zooming, and adding or removing light sources. The program utilizes [JavaFX's Shape3D](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/shape/Shape3D.html) for rendering 3D objects, adapting it for custom functionality.
+
+For more on the code and how I used JavaFX's 2D centric framework to make 3D modelling go to [this page](https://michael-perdue.github.io/posts/3D-Modelling-Programs-Structure/)
+
+For the source code please visit the [GitHub repository](https://github.com/Michael-Perdue/3D-Modelling).
+
+# Demo of whole system
 
 Here is a video of me making a dice from scratch in the program. The creation of it is sped up by 7x making the total time to make the dice from scratch just under 8 mins with my program:
 
 {% include embed/youtube.html id='qFn9ltRbty8' %}
 
-
 Below is a video of the whole system working and systematically showing each feature :
 
 {% include embed/youtube.html id='GmSJv23EQBg' %}
+
 
 # Program features
 
@@ -130,8 +138,28 @@ As my program does not have different colored lines for each axis that you can t
 
 ### Adding lightboxes
 
+You can add lightboxes by adding a new shape and selecting enable on lightbox, configuring an existing shape and enabling the lightbox or by duplicating an existing lightbox.
+
+![](/assets/3D-LightDuplicate.gif)
+
 ### Removing lightboxes
+
+You can remove lightboxes by configuring an existing shape and disabling the lightbox or by selecting an existing lightbox and clicking the button labled *'Delete'*.
+
+![](/assets/3D-LightDelete.gif)
 
 ### Hiding all lightboxes
 
+You can hide the physical bodies of all lightboxes if you want them to still affect lighting but not be visable by clicking the button labled *'Hide Lights'*. This will also deselect any selected lights. To make the lights phyiscally visable again you need to click the same button which will now be labled *'Show Lights'*.
+
+![](/assets/3D-LightHide.gif)
+
 ### Disabling all lightboxes
+
+You can disable all lightboxes emitting light by clicking the button labled *'Disable Lights'*. To make the lights emit light again you need to click the same button which will now be labled *'Disable Lights'*.
+
+![](/assets/3D-LightEnable.gif)
+
+**Closing Thoughts:**
+
+The 3D modeling program I made ended up being very user-friendly and really pushes JavaFX to its limits. At the same time it forced me to think beyond just using premade functions/classes and think about how I could extend the existing system.

@@ -1,20 +1,19 @@
 ---
-title: What My Discord Helper Bot Does
+title: Discord Helper Bot Functionality
 date: 2023-07-23
 categories: [Additional Projects, Discord Bot Project]
 tags: [python, discord]  # TAG names should always be lowercase
 pin: true
 ---
 
-This page focuses on what different functions/utilities the helper bot provides to the user and the motivation behind the bot. If you want to see the inner workings of the bot explained then look at [this page](https://michael-perdue.github.io/posts/How-My-Discord-Bot-Works/), and if you want to just see the code then click [here for the public GitHub repo of the bot](https://github.com/Michael-Perdue/Discord-bot). 
+**Project Overview:**
 
-# The motivation for this project
+This page focuses on what different functions/utilities the helper bot provides to the user and the motivation behind the bot. If you want to see the inner workings of the bot explained then look at [this page](https://michael-perdue.github.io/posts/How-My-Discord-Bot-Works/), and if you want to just see the code then click [here for the public GitHub repo of the bot](https://github.com/Michael-Perdue/Discord-bot). 
 
 A discord bot is a bot that you can add to a discord server (a server is just a collection of users and a series of text and voice channels) which can then manage the server, provide commands, filter messages etc.
 
 There exist many different discord bots already like [MEE6](https://mee6.xyz/en/) or [DYNO](https://dyno.gg/) and others which all have probably more functionality overall than the helper bot that I have made has. With that being said the issue with these bots is that they are mostly each specialized for one function so like [DYNO](https://dyno.gg/) is built for moderation and discord server management which means if I also want to be able to have a command to do a coin flip or roll a dice then I would need another discord bot like MEE6. This then leads to me having to search multiple sites for all the commands and you also have to hope they use unique identifiers or use different slash commands as 2 bots could use '!' to start their command which would then cause issues. So noticing this issue I decided to make a bot mainly for personal/friend use as I just wanted to have one bot which does everything I need.
 
-So this page covers all the functionality of the bot without getting bogged down with the implementation side of things which is covered on a [separate page](https://michael-perdue.github.io/posts/How-My-Discord-Bot-Works/). This page is also perfect for anyone using the bot and wanting to know all the commands it provides. 
 
 # Helper bot Functions and commands
 
