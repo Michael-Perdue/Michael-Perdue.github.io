@@ -2,7 +2,7 @@
 title: Smart Environment Toolkit
 date: 2023-03-20
 categories: [University Projects, 3rd year]
-tags: [java, c++, python, flask, grafana, influx, sql, microbits, rest api]  # TAG names should always be lowercase
+tags: [java, c++, python, flask, grafana, influx, sql, microbits, rest api, distributed systems]  # TAG names should always be lowercase
 pin: true
 ---
 
@@ -208,60 +208,61 @@ def findAddress():
 Regarding API testing, I performed unit tests using the unittest library to verify persistent login, route functionality, and data accuracy, in addition to integration and end-to-end testing.
 
 
+## Demo and Costs
 
-# Demo and Costs
-
-## Demo of overall system
+### Demo of overall system
 
 Here is a video of the website working from a phone:
 
 {% include embed/youtube.html id='edvk2hz0MMY' %}
 
-## Demo of the hardware sides of things:
+### Demo of the hardware sides of things:
 
 In the demo below, you can observe the system in action, with each cluster representing a room and its associated microbits (please note that it has been tested in larger environments beyond what's shown). The computer, equipped with a base camp microbit, flashes "B" upon message processing. The computer's console window displays logs from the basestation such as messages processed per second, microbits connecting and disconnecting, and any errors. Lastly, the computer showcases the homepage dashboard of the website, featuring live data.
 
 ![](https://michael-perdue.github.io/assets/AllToolkit.gif)
 
-## Realtime environmental data (including location tracking)
+### Realtime environmental data (including location tracking)
 
-Each microbit sensor records temperature, light, and noise levels. Temperature is measured in Celsius, while light and noise are on scales of 0 to 255 and readings in the 9000s, respectively. We converted these values into thresholds, categorizing them as 'quiet' for noise levels below a certain value and 'dark' for low light levels. This data is displayed on the website's homepage, categorized by zone, area, and room.
+Each microbit sensor records temperature, light, and noise levels. Temperature is in Celsius, while light and noise are on scales of 0 to 255 and readings in the 9000s, respectively. We converted these values into 'quiet' for noise levels below a certain value and 'dark' for low light levels. This data is displayed on the website's homepage, categorized by zone, area, and room.
 
-Additionally, the system tracks the capacity of each zone, representing the number of people with microbits in each zone. Walkers periodically send signals to nearby sensors to determine their location, which is reported back every 10 seconds and stored. The API retrieves capacity data from the last 5 minutes to ensure accurate tracking and prevent inactive microbits from being counted. Each walker is only counted once based on their unique ID and the last recorded location.
+The system also tracks each zone's capacity, representing the number of people with microbits in it. Walkers send signals to nearby sensors to determine their location, reported every 10 seconds and stored. The API retrieves capacity data from the last 5 minutes for accuracy and ensures no duplicate counts of walkers based on unique IDs and the last recorded location.
 
 Here you can see a video of the location tracking working looking on the left screen you will see the current capacity numbers change within 10 seconds of the microbit walker being moved and you can also see the live temp,noise and light level:
 
 {% include embed/youtube.html id='U2OOp0CowE4' %}
 
-## Light actuation
+### Light actuation
 
 Here is a video of the a microbit being made a sensor via the website and then on the website turning that sensors light on:
 
 ![](https://michael-perdue.github.io/assets/LightToolkit.gif)
 
-## Door unlocking and locking
+### Door unlocking and locking
 
 Here is a video of the a walker trying to open a door they dont have permission to, then giving them permission and them opening the door:
 
 ![](https://michael-perdue.github.io/assets/DoorToolkit.gif)
 
 
-## Graphs of live and historic data
+### Graphs of live and historic data
 
 Here is a short video showing the graphs with live and historic data:
 
 {% include embed/youtube.html id='ajzAyRZk2zI' %}
 
 
-## System structure and user management 
+### System structure and user management 
 
-As you can see in the previous screenshots, gifs and videos you can manage the whole system from the front end. So you can not only make new zones which are just clusters of areas and an area is just user defined so a floor, a building or whatever depending on the scenario but you can also easily manage all the microbits in those zones. None of the system is hardcoded which means that everything can be catered to end user and we successfully tested this by using the same system to make a smart campus then a smart hotel with no code being changed. The result of which showed their was zero issues in swapping between the two and their was no issues with the system not being able to adapt to the different scenarios. In addition their is two user levels a user and an admin the user can create an account and an admin can promote a user to an admin, delete an account and only admins can configure the system.
+As seen in the previous screenshots, GIFs, and videos, you can fully manage the system from the front end. This includes creating new zones, which are clusters of user-defined areas (such as floors or buildings). You can also easily manage all the microbits within these zones. Notably, the system is highly customizable and adaptable to various scenarios, as demonstrated by successfully transitioning from a smart campus to a smart hotel without any code changes.
 
-Below I have included the design mockups of the system, (rather then just a massive amount of webpages) the only things to note is institutes was instead renamed to area to fit a better generalisible system and I have included 3 older mockups to show how much the design has changed due to user testing:
+The system supports two user levels: user and admin. Users can create accounts, while admins have additional privileges like promoting users, deleting accounts, and configuring the system. 
+
+Below are design mockups of the system, showcasing its evolution through various iterations based on user testing and feedback.
 
 ![](https://michael-perdue.github.io/assets/ToolKitPages.png)
 
-## Costings of the system
+### Costings of the system
 
 Here's an estimate of the costs associated with different system sizes:
 
