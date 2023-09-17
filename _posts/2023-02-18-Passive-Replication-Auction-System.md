@@ -13,7 +13,7 @@ This project is an auction system consisting of a stateless front-end, passive r
 
 Below is a detailed architecture diagram the only thing that it doesn't cover is each replica on startup looks through the RMI Registry to find the primary and then calls the primary replica to update all replica's state and if there is no primary replica it makes itself primary:
 
-![](/assets/Auction-Structure.png)
+![](https://michael-perdue.github.io/assets/Auction-Structure.png)
 
 ## Passive Replication in the system
 
@@ -52,7 +52,7 @@ Below is a detailed architecture diagram the only thing that it doesn't cover is
 
 Here you can see the starting up of the auction system, 2 clients using the system, 2 replicas, shows the handling of primary replica failure and complete replica turnover.
 
-![](/assets/Auction-demo.gif)
+![](https://michael-perdue.github.io/assets/Auction-Demo.gif)
 
 **Closing thoughts:**     
 This project was great at getting me to understand the basics of a distributed system and how replication works specifically passive replication.
