@@ -20,16 +20,43 @@ Hello, I'm Michael Perdue, a passionate and detail-oriented software engineer wi
 
 ## Personal Statement
 
-I am a highly motivated individual with a friendly and approachable demeanor. My experiences, ranging from independent programming projects to collaborative work as a Scrum Master, have equipped me with not only technical skills but also strong time management and communication abilities. I am a critical thinker and highly adaptable when it comes to problem-solving, always eager to learn and grow in my field.
+Software Engineer specialising in Java backend development within fintech, building distributed, event-driven and cloud-native systems. Experienced in developing and maintaining Spring Boot services, designing ISO20022 message flows using Apache Camel and supporting high-availability architectures powered by RabbitMQ and Oracle DB. Contributed to cloud platform migration initiatives and delivered deployment automation adopted across multiple teams.
+
+## Skills
+
+- **Programming Languages:** Java, Python, SQL
+- **Frameworks:** Spring Boot, Apache Camel, Flask, Angular, JavaFX
+- **Messaging & Databases:** RabbitMQ, MySQL, Oracle DB, InfluxDB
+- **Cloud & DevOps:** AWS, Pivotal Cloud Foundry (PCF), Docker, Git, Bitbucket
+- **Testing:** JUnit, Cucumber, JMeter
+- **Tools:** Grafana, Insomnia, Postman
+- **Other:** REST APIs, Event-Driven Architecture, ISO20022, Google Protocol Buffers
+
+## Professional Experience
+### Software Engineer I Mastercard – London, UK (Hybrid)
+September 2024 – Present
+- Contributed to the migration of enterprise Spring Boot services from AWS to Pivotal Cloud Foundry (PCF) across multiple engineering teams.
+-	Designed and implemented reusable deployment automation scripts and migration documentation adopted across multiple teams, reducing manual engineering effort by 1,500+ minutes within six months.
+-	Designed and maintained ISO20022 message processing flows using Apache Camel and Spring Boot.
+-	Maintained and enhanced event-driven integrations using RabbitMQ and Oracle DB, resolving defects.
+-	Worked within existing CI/CD pipelines and containerised environments using Docker, Git, Bitbucket, AWS and PCF to build, test and deploy services.
+-	Implemented automated testing across unit (JUnit), integration (Cucumber), and performance (JMeter)
+-	Acted as a subject-matter expert for transaction flows within the product, serving as a key point of contact for technical guidance, complex defect resolution and cross-team knowledge sharing.
+
+### Software Engineer (University Industrial Placement) BSI – Remote
+January 2024 – May 2024
+- Led the architectural redesign of a legacy translation system within a large-scale Angular (TypeScript) application, standardising translation logic across 75 components and 30+ services.
+- Introduced a hierarchical taxonomy-based lookup model and centralised translation service, improving maintainability and enforcing consistent translation patterns.
+- Eliminated 128 duplicate key-value pairs (12.8% reduction) and restructured translation documents for scalability and maintainability.
+- Designed and implemented dynamic locale generation, successfully internationalising the platform and validating delivery through Spanish localisation.
 
 ## Education
 
-- **MSci. Software Engineering with Industrial Experience**
+- **MSci. Software Engineering with Industrial Experience - First-Class Honors**
   - *Lancaster University*
   - *October 2020 – July 2024*
-  - *Expected First-Class Honors*
 
-## Relevant Experience
+## Technical Project Highlights
 
 ### Summer Projects (May – September 2023)
 
@@ -58,21 +85,3 @@ I am a highly motivated individual with a friendly and approachable demeanor. My
 
 - *Successfully presented the VR project to the Royal Society and engaged with a diverse audience, including industry experts.*
 
-## Skills
-
-- **Programming Languages:** Java, Python, C, C#
-- **Databases:** SQL, MySQL, InfluxDB
-- **Tools & Frameworks:** Flask, JavaFX, Docker, Grafana
-- **Version Control:** Git, GitHub
-- **Problem Solving:** Critical thinking, adaptability
-- **Teamwork:** Scrum Master, collaboration
-- **Communication:** Strong written and verbal skills
-- **Project Management:** Time management, organization
-
-## Personal Interests
-
-In addition to my technical pursuits, I have a range of personal interests that shape my character and contribute to my versatility:
-
-- **Sports:** I have been a competitive football player with Kislingbury, a local team, for 4 years. This experience has taught me the value of teamwork and discipline.
-
-- **Travel:** I am passionate about exploring new cultures and destinations.
